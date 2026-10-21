@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "statusValues": [
+    "VERIFIED — ALABAMA AUTHORITY COMPLETE",
+    "VERIFIED — PRIMARY SOURCE ONLY",
+    "CASE-LAW REVIEW REQUIRED",
+    "CONFLICT / DISTINCTION REVIEW REQUIRED",
+    "UNVERIFIED — DO NOT RELY ON THIS AS LEGAL INFORMATION"
+  ],
+  "requiredFields": {
+    "query": [
+      "userQuestion",
+      "issueTags",
+      "factsUsed",
+      "proceduralPosture",
+      "existingOrderStatus",
+      "jurisdiction"
+    ],
+    "law": [
+      "statutes",
+      "courtRules",
+      "officialForms",
+      "agencySources",
+      "federalSourcesWhenApplicable"
+    ],
+    "cases": [
+      "caseName",
+      "citation",
+      "court",
+      "year",
+      "sourceUrl",
+      "pinpointSupport",
+      "holdingOrRule",
+      "factPattern",
+      "proceduralPosture",
+      "treatment",
+      "lastVerified"
+    ],
+    "analysis": [
+      "materialDistinctions",
+      "exceptions",
+      "conflicts",
+      "plainLanguageExplanation",
+      "verificationStatus",
+      "reviewerStatus",
+      "verificationDate"
+    ],
+    "safety": [
+      "notLegalAdvice",
+      "noOutcomeGuarantee",
+      "licensedAttorneyReferralWhenNeeded"
+    ]
+  },
+  "hardStops": [
+    "No case name or citation may be generated unless verified from a reliable source.",
+    "No definitive Alabama legal explanation when applicable case law has not been verified.",
+    "No legal deadline may be stated unless verified from a controlling or official source.",
+    "No legal answer may omit material factual distinctions known to affect the issue.",
+    "No source may be treated as current without a last-verified date."
+  ],
+  "searchFlow": [
+    "Classify issue",
+    "Collect minimum necessary facts",
+    "Identify procedural posture",
+    "Retrieve Alabama statutes/rules",
+    "Retrieve relevant published Alabama appellate authority",
+    "Check current treatment and later authority",
+    "Retrieve official agency/court materials",
+    "Compare facts to authorities",
+    "Assign verification status",
+    "Generate educational explanation with citations and distinctions",
+    "Refer to licensed legal help when individualized advice is needed"
+  ]
+}
