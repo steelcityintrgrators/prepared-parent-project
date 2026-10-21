@@ -12,8 +12,8 @@ resources:{title:"Family / public resources",facts:["County / service area","Hou
 };
 const stages={initial:"Initial case / no final order",modify:"Modification",enforce:"Enforcement / contempt",agency:"DHR / administrative process",prepare:"Preparing for a hearing / appointment",general:"General information"};
 const orderText={yes:"A written order already exists. The educational path must distinguish what the current order says from any modification or enforcement question.",no:"No existing order was selected. Initial-case standards and procedures should be separated from modification law.",unsure:"The first step is identifying whether a controlling order already exists.",na:"An existing court order may not be relevant to this resource question."};
-function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
-function tagList(items){return items.map(x=>'<span class="tag">'+esc(x)+'</span>').join("");}
+function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+function tagList(items){return items.map(function(x){return '<span class="tag">'+esc(x)+'</span>';}).join("");}
 form.addEventListener("submit",function(e){
 e.preventDefault();
 const topic=document.getElementById("topic").value;
@@ -32,5 +32,5 @@ const authorityData=[
 ["DHR process","Official Alabama DHR materials + applicable law","Primary-source layer","verified"],
 ["Public resources","Official state/federal agency information","Primary-source layer","verified"]
 ];
-rows.innerHTML=authorityData.map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td><span class="state '+r[3]+'">'+esc(r[2])+'</span></td></tr>').join("");
+rows.innerHTML=authorityData.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td><span class="state '+r[3]+'">'+esc(r[2])+'</span></td></tr>';}).join("");
 })();
