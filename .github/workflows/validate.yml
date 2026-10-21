@@ -1,0 +1,30 @@
+name: Validate Prepared Parent site
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required files
+        run: |
+          test -f index.html
+          test -f resources.html
+          test -f disclaimer.html
+          test -f assets/styles.css
+          test -f assets/app.js
+          test -f data/resource-paths.json
+          test -f data/alabama-authority-matrix.csv
+      - name: Verify non-law-firm disclaimer
+        run: |
+          grep -qi "not a law firm" index.html
+          grep -qi "not legal advice" disclaimer.html
+      - name: Validate JSON
+        run: python -m json.tool data/resource-paths.json >/dev/null
+      - name: Check for prohibited law-firm positioning
+        run: |
+          ! grep -RniE "our attorneys|our legal team|legal consultation|case evaluation|we represent you" --include='*.html' --include='*.md' . 
