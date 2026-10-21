@@ -1,0 +1,93 @@
+{
+  "version":"2026-10-21",
+  "disclaimer":"The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation.",
+  "paths":[
+    {
+      "id":"custody",
+      "title":"Custody & Parenting Time",
+      "summary":"Educational resources for parents trying to understand initial custody decisions, parenting time, modification, and related court preparation.",
+      "questions":[
+        "Is there already a written custody or parenting-time order?",
+        "Is this an initial case or a request to modify an existing order?",
+        "What does the current order actually say?",
+        "Has anything materially changed since the current order?",
+        "Are there interstate, military, incarceration, domestic-violence, or child-safety issues?"
+      ],
+      "authorityLayers":[
+        "Applicable Alabama custody statutes",
+        "Applicable Alabama court rules",
+        "Verified published Alabama appellate authority matched to the specific issue"
+      ],
+      "publicationStatus":"case-law-gated"
+    },
+    {
+      "id":"support",
+      "title":"Child Support",
+      "summary":"Educational resources covering Alabama child-support guidelines, existing orders, modification, enforcement, income records, and shared-custody issues.",
+      "questions":[
+        "Is there already a child-support order?",
+        "Is the issue establishment, modification, enforcement, arrears, or income verification?",
+        "What custody or parenting-time arrangement exists?",
+        "What income records are available?",
+        "Are child-care or health-insurance costs part of the issue?"
+      ],
+      "authorityLayers":[
+        "Alabama Rule 32",
+        "Applicable Alabama statutes and court rules",
+        "Verified published Alabama appellate authority matched to the legal proposition"
+      ],
+      "publicationStatus":"case-law-gated"
+    },
+    {
+      "id":"dhr",
+      "title":"DHR & Agency Processes",
+      "summary":"Educational navigation for Alabama DHR child-support and family-resource processes.",
+      "questions":[
+        "What program, notice, or agency action is involved?",
+        "Is there a connected court case?",
+        "Does the notice state a deadline or hearing date?",
+        "Are there safety concerns that require a different resource path?"
+      ],
+      "authorityLayers":[
+        "Official Alabama DHR materials",
+        "Applicable statutes and court rules",
+        "Verified Alabama case authority when interpretation is needed"
+      ],
+      "publicationStatus":"primary-source-plus-case-law-when-applicable"
+    },
+    {
+      "id":"court",
+      "title":"Court Preparation",
+      "summary":"Educational checklists for organizing documents, questions, timelines, and official resources before a hearing.",
+      "questions":[
+        "What court and case type are involved?",
+        "What issue is the hearing expected to address?",
+        "What orders already exist?",
+        "What documents, communications, receipts, calendars, and records are available?"
+      ],
+      "authorityLayers":[
+        "Applicable Alabama court rules",
+        "Official Alabama forms",
+        "Relevant statutes and verified appellate authority for the issue"
+      ],
+      "publicationStatus":"case-law-gated"
+    },
+    {
+      "id":"resources",
+      "title":"Family & Public Resources",
+      "summary":"Navigation to public-benefit, child-care, health, parenting, safety, and family-stability resources.",
+      "questions":[
+        "What county or service area applies?",
+        "What kind of help is needed?",
+        "Is the need urgent or safety-related?",
+        "Are age, household, work, school, or income factors relevant?"
+      ],
+      "authorityLayers":[
+        "Official Alabama agency sources",
+        "Official federal sources where applicable",
+        "Program-specific eligibility materials"
+      ],
+      "publicationStatus":"primary-source"
+    }
+  ]
+}
