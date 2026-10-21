@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Prepared Parent educational resource paths for Alabama parents. Not a law firm. Not legal advice.">
+<title>Resource Paths | The Prepared Parent Project</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="legal-banner"><strong>Educational information only.</strong> The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation.</div>
+<header class="site-header">
+  <div class="nav shell">
+    <a class="brand" href="index.html"><span class="logo">PP</span><span><b>The Prepared Parent Project</b><small>Preparing Alabama parents. Strengthening Alabama families.</small></span></a>
+    <nav><a href="index.html#navigator">Navigator</a><a href="resources.html">Resources</a><a href="disclaimer.html">Disclaimer</a></nav>
+  </div>
+</header>
+<main>
+<section class="section">
+  <div class="shell">
+    <div class="section-head"><p class="eyebrow">Resource paths</p><h1 style="font-size:clamp(40px,6vw,68px);color:var(--ink)">Start with the situation, not the label.</h1><p>Each path is built to ask what is actually happening before showing educational information and source layers.</p></div>
+    <div id="resourceCards" class="cards"></div>
+  </div>
+</section>
+<section class="section navigator">
+  <div class="shell">
+    <div class="section-head"><p class="eyebrow">How this protects parents</p><h2>No one-size-fits-all legal answers.</h2></div>
+    <div class="cards three">
+      <article><h3>1. Identify posture</h3><p>Initial case, modification, enforcement, DHR process, or general resource need.</p></article>
+      <article><h3>2. Match authority</h3><p>Use applicable Alabama statutes, rules, official materials, and verified appellate authority when relevant.</p></article>
+      <article><h3>3. Explain limits</h3><p>Show factual distinctions, uncertainty, review status, and when licensed legal help is appropriate.</p></article>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="shell footer-grid"><div><h3>The Prepared Parent Project</h3><p>Preparing Alabama parents. Strengthening Alabama families.</p></div><p class="footer-disclaimer">The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation. Nothing on this site creates an attorney-client relationship.</p></div></footer>
+<script>
+fetch('data/resource-paths.json').then(r=>r.json()).then(data=>{
+  const el=document.getElementById('resourceCards');
+  el.innerHTML=data.paths.map(p=>'<article><span>'+p.title.charAt(0)+'</span><h3>'+p.title+'</h3><p>'+p.summary+'</p><p><strong>Authority layer:</strong> '+p.authorityLayers.join(' · ')+'</p><p><strong>Status:</strong> '+p.publicationStatus.replaceAll('-',' ')+'</p></article>').join('');
+}).catch(()=>{document.getElementById('resourceCards').innerHTML='<article><h3>Resource paths unavailable</h3><p>Please return to the navigator and try again.</p></article>';});
+</script>
+</body>
+</html>
