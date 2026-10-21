@@ -32,9 +32,10 @@ jobs:
           python -m json.tool data/resource-paths.json >/dev/null
           python -m json.tool data/content-library.json >/dev/null
           python -m json.tool data/publishing-queue.json >/dev/null
-      - name: Check for prohibited law-firm positioning
+      - name: Check public site for prohibited law-firm positioning
         run: |
-          ! grep -RniE "our attorneys|our legal team|legal consultation|case evaluation|we represent you" --include='*.html' --include='*.md' . 
+          # Policy documentation intentionally names prohibited phrases; only public-facing site copy is scanned.
+          ! grep -RniE "our attorneys|our legal team|legal consultation|case evaluation|we represent you" --include='*.html' .
 
       - name: Enforce publishing gates
         run: |
