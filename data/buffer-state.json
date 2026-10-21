@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "mode": "CONTROLLED_TEST",
+  "channels": {
+    "facebook": {"status": "CONNECTED_REPORTED_NOT_API_VERIFIED", "externalId": null, "tested": false},
+    "instagram": {"status": "CONNECTED_REPORTED_NOT_API_VERIFIED", "externalId": null, "tested": false},
+    "youtube": {"status": "CONNECTED_REPORTED_NOT_API_VERIFIED", "externalId": null, "tested": false}
+  },
+  "lastDiscovery": null,
+  "publishingEnabled": false
+}
