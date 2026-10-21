@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "policy": {
+    "defaultState": "BLOCKED",
+    "readyState": "READY",
+    "legalGate": "Alabama legal/court content cannot become READY until its required authority verification and review are complete."
+  },
+  "records": [
+    {
+      "id": "PP-007",
+      "topic": "Family record keeping",
+      "contentType": "general-resource",
+      "verificationStatus": "source-reviewed",
+      "sourceUrl": "https://www.ready.gov/plan",
+      "targets": [
+        "facebook",
+        "instagram"
+      ],
+      "assetStatus": "NEEDS_CANVA_ASSET",
+      "copyStatus": "DRAFT_REQUIRED",
+      "publishGate": "BLOCKED",
+      "reason": "Controlled test asset and copy not yet finalized."
+    },
+    {
+      "id": "PP-008",
+      "topic": "Family emergency information sheet",
+      "contentType": "general-resource",
+      "verificationStatus": "source-reviewed",
+      "sourceUrl": "https://www.ready.gov/kids/family-emergency-planning",
+      "targets": [
+        "facebook",
+        "instagram",
+        "youtube"
+      ],
+      "assetStatus": "NEEDS_CANVA_ASSET",
+      "copyStatus": "DRAFT_REQUIRED",
+      "publishGate": "BLOCKED",
+      "reason": "Controlled test asset and copy not yet finalized."
+    },
+    {
+      "id": "PP-016",
+      "topic": "Alabama WIC application preparation",
+      "contentType": "general-resource",
+      "verificationStatus": "source-reviewed",
+      "sourceUrl": "https://www.alabamapublichealth.gov/wic/apply.html",
+      "targets": [
+        "facebook",
+        "instagram"
+      ],
+      "assetStatus": "NEEDS_CANVA_ASSET",
+      "copyStatus": "DRAFT_REQUIRED",
+      "publishGate": "BLOCKED",
+      "reason": "Asset and platform copy required."
+    },
+    {
+      "id": "PP-001",
+      "topic": "Child support and shared physical custody",
+      "contentType": "alabama-legal",
+      "verificationStatus": "CASE-LAW REVIEW REQUIRED",
+      "sourceUrl": "https://judicial.alabama.gov/docs/library/rules/ja32.pdf",
+      "targets": [
+        "facebook",
+        "instagram",
+        "youtube"
+      ],
+      "assetStatus": "BLOCKED_BY_LEGAL_GATE",
+      "copyStatus": "BLOCKED_BY_LEGAL_GATE",
+      "publishGate": "BLOCKED",
+      "reason": "Current Rule 32/shared-custody authority and relevant case-law treatment must be verified before publication."
+    }
+  ]
+}
