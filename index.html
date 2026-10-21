@@ -3,16 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Alabama-focused educational resources for parents. The Prepared Parent Project is not a law firm and does not provide legal advice.">
+<meta name="description" content="The Prepared Parent Project — Alabama-focused parent education and resource navigation. Not a law firm. Not legal advice.">
 <title>The Prepared Parent Project</title>
 <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<div class="legal-banner"><strong>Educational information only.</strong> The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation.</div>
+<div class="noticebar"><strong>Educational information only.</strong> The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation.</div>
 <header class="site-header">
   <div class="nav shell">
     <a class="brand" href="#top"><span class="logo">PP</span><span><b>The Prepared Parent Project</b><small>Preparing Alabama parents. Strengthening Alabama families.</small></span></a>
-    <nav><a href="#help">Get Help</a><a href="#navigator">Navigator</a><a href="resources.html">Resources</a><a href="#library">Authority Library</a><a href="disclaimer.html">Disclaimer</a><a class="btn" href="#navigator">Find My Starting Point</a></nav>
+    <nav class="links">
+      <a href="#help">Get Help</a><a href="#navigator">Navigator</a><a href="#resources">Resources</a><a href="#library">Authority Library</a><a href="#about">About</a><a class="btn small" href="#navigator">Find My Starting Point</a>
+    </nav>
   </div>
 </header>
 <main id="top">
@@ -22,69 +24,139 @@
       <p class="kicker">Alabama parent resource system</p>
       <h1>Your situation matters.</h1>
       <p class="lead">Custody, child support, DHR, court preparation, family stability, and public resources do not fit into one bucket. Start with what is actually happening, then review educational material tied to relevant Alabama authorities and trusted public sources.</p>
-      <div class="actions"><a class="btn light" href="#navigator">Start with my situation</a><a class="btn ghost" href="#library">Browse authority library</a></div>
+      <div class="actions"><a class="btn secondary" href="#navigator">Start with my situation</a><a class="btn ghost" href="#resources">Browse resources</a></div>
     </div>
-    <div class="steps">
+    <aside class="flow">
       <h3>How the system works</h3>
-      <div class="step-grid"><div><b>1</b><span>Understand the situation</span></div><div><b>2</b><span>Identify relevant authority</span></div><div><b>3</b><span>Explain in plain language</span></div><div><b>4</b><span>Route to the right resource</span></div></div>
-    </div>
+      <div class="flow-grid"><div><b>1</b><span>Understand the situation</span></div><div><b>2</b><span>Identify relevant authority</span></div><div><b>3</b><span>Explain in plain language</span></div><div><b>4</b><span>Route to the right resource</span></div></div>
+    </aside>
   </div>
 </section>
 
 <section id="help" class="section">
   <div class="shell">
-    <div class="section-head"><p class="eyebrow">Start where you are</p><h2>One parent resource center. Multiple paths.</h2><p>The system routes parents based on their actual circumstances rather than giving everyone the same answer.</p></div>
+    <div class="section-head"><p class="eyebrow">Start where you are</p><h2>One parent resource center. Multiple paths.</h2><p>The system routes parents based on their actual circumstances rather than forcing everyone into the same answer.</p></div>
     <div class="cards">
-      <article><span>⚖</span><h3>Court & Custody</h3><p>Custody concepts, procedural posture, official resources, and Alabama authority relevant to the issue being researched.</p></article>
-      <article><span>$</span><h3>Child Support</h3><p>Guidelines, existing orders, modification, enforcement, income records, and why procedural posture matters.</p></article>
-      <article><span>DHR</span><h3>DHR & Agency Processes</h3><p>Official child-support services, agency procedures, public-resource programs, and Alabama government information.</p></article>
-      <article><span>✓</span><h3>Court Preparation</h3><p>Documents, questions, timelines, evidence, official forms, and resources before a hearing or appointment.</p></article>
-      <article><span>♥</span><h3>Family Stability</h3><p>Co-parenting, emergency planning, parenting education, financial preparedness, and practical family systems.</p></article>
-      <article><span>↗</span><h3>Find Legal Help</h3><p>Independent licensed attorneys and legal-aid resources when individualized legal advice or representation is needed.</p></article>
+      <article class="card"><div class="icon">⚖</div><h3>Court & Custody</h3><p>Custody concepts, procedural posture, official resources, and Alabama authority relevant to the issue being researched.</p><a href="#navigator" data-topic="custody">Start custody path →</a></article>
+      <article class="card"><div class="icon">$</div><h3>Child Support</h3><p>Guidelines, existing orders, modification, enforcement, income records, and why procedural posture matters.</p><a href="#navigator" data-topic="support">Start support path →</a></article>
+      <article class="card"><div class="icon">DHR</div><h3>DHR & Agency Processes</h3><p>Official child-support services, agency procedures, public-resource programs, and Alabama government information.</p><a href="#navigator" data-topic="dhr">Start DHR path →</a></article>
+      <article class="card"><div class="icon">✓</div><h3>Court Preparation</h3><p>Documents, questions, timelines, evidence, official forms, and resources before a hearing or appointment.</p><a href="#navigator" data-topic="court">Start court-prep path →</a></article>
+      <article class="card"><div class="icon">♥</div><h3>Family Stability</h3><p>Co-parenting, emergency planning, parenting education, financial preparedness, and practical family systems.</p><a href="#resources" data-filter="family">Browse family resources →</a></article>
+      <article class="card"><div class="icon">↗</div><h3>Find Legal Help</h3><p>Independent licensed attorneys and legal-aid resources when individualized legal advice or representation is needed.</p><a href="#resources" data-filter="legal-help">Find independent help →</a></article>
     </div>
   </div>
 </section>
 
-<section id="navigator" class="section navigator">
+<section id="navigator" class="section alt">
   <div class="shell">
-    <div class="section-head"><p class="eyebrow">Situation-aware navigator</p><h2>Build an educational path around the parent’s circumstances.</h2><p>This working model changes the path based on the topic, existing orders, procedural stage, and safety concerns.</p></div>
-    <div id="status" class="status">Interactive navigator loaded.</div>
-    <div class="navigator-grid">
+    <div class="section-head"><p class="eyebrow">Situation-aware navigator</p><h2>Build an educational path around the parent’s circumstances.</h2><p>This navigator changes the path based on topic, existing orders, procedural stage, and safety concerns.</p></div>
+    <div class="status">● Interactive navigator ready</div>
+    <div class="navigator-shell">
       <form id="navigatorForm">
-        <label>What do you need help understanding?<select id="topic"><option value="custody">Custody / parenting time</option><option value="support">Child support</option><option value="dhr">DHR / agency process</option><option value="court">Court preparation</option><option value="resources">Family / public resources</option></select></label>
-        <label>Is there already a court order?<select id="order"><option value="yes">Yes</option><option value="no">No</option><option value="unsure">I am not sure</option><option value="na">Not applicable</option></select></label>
-        <label>What stage are you in?<select id="stage"><option value="initial">Initial case / no final order</option><option value="modify">Trying to modify an order</option><option value="enforce">Enforcement / contempt issue</option><option value="agency">DHR / administrative process</option><option value="prepare">Preparing for a hearing / appointment</option><option value="general">General information only</option></select></label>
-        <label>Is there an urgent safety concern?<select id="urgent"><option value="no">No</option><option value="yes">Yes</option></select></label>
-        <label>What changed or what are you trying to understand?<textarea id="details" placeholder="Example: parenting time changed, income changed, I received a notice, or I am preparing for a hearing."></textarea></label>
+        <label>What do you need help understanding?
+          <select id="topic">
+            <option value="custody">Custody / parenting time</option>
+            <option value="support">Child support</option>
+            <option value="dhr">DHR / agency process</option>
+            <option value="court">Court preparation</option>
+            <option value="resources">Family / public resources</option>
+          </select>
+        </label>
+        <label>Is there already a court order?
+          <select id="order">
+            <option value="yes">Yes</option><option value="no">No</option><option value="unsure">I am not sure</option><option value="na">Not applicable</option>
+          </select>
+        </label>
+        <label>What stage are you in?
+          <select id="stage">
+            <option value="initial">Initial case / no final order</option>
+            <option value="modify">Trying to modify an order</option>
+            <option value="enforce">Enforcement / contempt issue</option>
+            <option value="agency">DHR / administrative process</option>
+            <option value="prepare">Preparing for a hearing / appointment</option>
+            <option value="general">General information only</option>
+          </select>
+        </label>
+        <label>Is there an urgent safety concern?
+          <select id="urgent"><option value="no">No</option><option value="yes">Yes</option></select>
+        </label>
+        <label>What changed or what are you trying to understand?
+          <textarea id="details" placeholder="Example: parenting time changed, income changed, I received a notice, or I am preparing for a hearing."></textarea>
+        </label>
         <button class="btn" type="submit">Build my educational path</button>
       </form>
-      <section class="result" id="result" aria-live="polite">
+      <section id="result" class="result" aria-live="polite">
         <h3>Your educational path will appear here.</h3>
-        <p>Select the options that best describe the situation and tap <strong>Build my educational path</strong>.</p>
+        <p>Select the options that best describe the situation, then choose <strong>Build my educational path</strong>.</p>
         <div class="notice"><strong>Important:</strong> this tool provides educational information only. It does not determine legal rights, predict what a judge will do, or create an attorney-client relationship.</div>
       </section>
     </div>
   </div>
 </section>
 
-<section id="library" class="section">
+<section id="resources" class="section">
   <div class="shell">
-    <div class="section-head"><p class="eyebrow">Alabama authority library</p><h2>Show the source behind the explanation.</h2><p>Legal propositions remain behind a publication gate until the applicable authority has been verified.</p></div>
+    <div class="section-head"><p class="eyebrow">Resource navigator</p><h2>Verified starting points, organized by need.</h2><p>These links lead to official or established public-service sources. Time-sensitive eligibility information should always be rechecked at the source.</p></div>
+    <div class="resource-toolbar">
+      <div>
+        <label style="margin:0">Search resources<input id="resourceSearch" type="search" placeholder="Search DHR, legal aid, court forms, Medicaid…"></label>
+      </div>
+      <div class="filters" aria-label="Resource filters">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="court">Court</button>
+        <button class="filter" data-filter="dhr">DHR</button>
+        <button class="filter" data-filter="family">Family</button>
+        <button class="filter" data-filter="legal-help">Legal help</button>
+      </div>
+    </div>
+    <div id="resourceGrid" class="resource-grid"></div>
+  </div>
+</section>
+
+<section id="library" class="section alt">
+  <div class="shell">
+    <div class="section-head"><p class="eyebrow">Alabama authority library</p><h2>Show the source behind the explanation.</h2><p>Legal propositions remain behind a publication gate until applicable authority has been verified.</p></div>
     <div class="library-grid">
-      <div class="table-wrap"><table><thead><tr><th>Topic</th><th>Authority layer</th><th>Status</th></tr></thead><tbody id="authorityRows"></tbody></table></div>
-      <aside class="panel"><h3>Legal-content publication gate</h3><p>Each legal proposition should record the issue, facts that matter, statute or rule, relevant Alabama case authority, source link, pinpoint support, date verified, distinctions, and review status.</p><div class="notice"><strong>Stop condition:</strong> if required case-law support has not been verified, the content remains unpublished.</div></aside>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Topic</th><th>Authority layer</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Child-support guidelines</td><td>Alabama Rule 32 + applicable published Alabama appellate authority</td><td><span class="state gated">Case-law gate</span></td></tr>
+            <tr><td>Custody / parenting time</td><td>Applicable Alabama statutes, court rules + published Alabama appellate authority</td><td><span class="state gated">Case-law gate</span></td></tr>
+            <tr><td>DHR process</td><td>Official Alabama DHR materials + applicable law</td><td><span class="state verified">Primary-source layer</span></td></tr>
+            <tr><td>Public resources</td><td>Official state/federal agency information</td><td><span class="state verified">Primary-source layer</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <aside class="panel">
+        <h3>Legal-content publication gate</h3>
+        <p>Each legal proposition should record the issue, facts that matter, statute or rule, relevant Alabama case authority, source link, pinpoint support, date verified, distinctions, and review status.</p>
+        <div class="notice"><strong>Stop condition:</strong> if required case-law support has not been verified, the content remains unpublished.</div>
+      </aside>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section id="about" class="section">
   <div class="shell">
-    <div class="section-head"><p class="eyebrow">Resource navigation</p><h2>Education first. Referral when individualized help is needed.</h2></div>
-    <div class="cards three"><article><h3>Official Alabama Sources</h3><p>Alabama Judicial System, Alabama Legislature, Alabama DHR, and other government sources.</p></article><article><h3>Case-Law Library</h3><p>Published Alabama appellate authorities indexed by topic, procedural posture, and fact pattern after verification.</p></article><article><h3>Independent Legal Help</h3><p>Referral pathways to licensed attorneys and legal-aid organizations. The Prepared Parent Project does not represent users.</p></article></div>
+    <div class="section-head"><p class="eyebrow">About the project</p><h2>Education, preparation, and resource navigation for Alabama parents.</h2></div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="mission">Mission</button>
+      <button class="tab" data-tab="standards">Standards</button>
+      <button class="tab" data-tab="disclaimer">Disclaimer</button>
+    </div>
+    <div id="mission" class="tabpanel active panel"><h3>Mission direction</h3><p>Preparing Alabama parents. Strengthening Alabama families. The project is designed to help parents understand processes, organize information, locate reliable resources, and better prepare for decisions affecting their families.</p></div>
+    <div id="standards" class="tabpanel panel"><h3>Source and review standards</h3><p>Legal and court-related content should distinguish primary law, official agency guidance, verified Alabama appellate authority, and plain-language educational explanation. AI-generated citations or unsupported legal propositions are not acceptable publication sources.</p></div>
+    <div id="disclaimer" class="tabpanel panel"><h3>Not a law firm. Not legal advice.</h3><p>The Prepared Parent Project does not provide legal advice, legal representation, or attorney services. No use of this website, resource navigator, educational material, social-media content, email, form, or program creates an attorney-client relationship. Parents should consult a licensed attorney for advice about individual rights, deadlines, filings, strategy, or representation.</p></div>
   </div>
 </section>
-<section class="section navigator"><div class="shell"><div class="section-head"><p class="eyebrow">Transparency</p><h2>Know what has—and has not—been verified.</h2><p>Prepared Parent separates primary-source material, case-law-gated legal education, and general family resources instead of presenting all information with the same confidence level.</p></div><div class="actions"><a class="btn" href="resources.html">Explore resource paths</a><a class="btn" style="background:white;color:var(--navy)" href="disclaimer.html">Read full disclaimer</a></div></div></section></main>
-<footer><div class="shell footer-grid"><div><h3>The Prepared Parent Project</h3><p>Preparing Alabama parents. Strengthening Alabama families.</p></div><p class="footer-disclaimer"><strong>Important disclaimer:</strong> The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation. Information provided through this website, social media, educational materials, programs, and technology is for general educational and informational purposes only. Laws and court procedures can change, every family’s circumstances are different, and nothing provided creates an attorney-client relationship or substitutes for advice from a licensed attorney regarding an individual situation.</p></div></footer>
+</main>
+<footer>
+  <div class="shell footer-grid">
+    <div><h3>The Prepared Parent Project</h3><p>Preparing Alabama parents. Strengthening Alabama families.</p><div class="utility"><a href="#resources">Resources</a><a href="#library">Authority Library</a><a href="#about">Disclaimer</a></div></div>
+    <p class="footer-disclaimer"><strong>Important disclaimer:</strong> The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation. Information provided through this website, social media, educational materials, programs, and technology is for general educational and informational purposes only. Laws and court procedures can change, every family’s circumstances are different, and nothing provided creates an attorney-client relationship or substitutes for advice from a licensed attorney regarding an individual situation.</p>
+  </div>
+</footer>
 <script src="assets/app.js"></script>
 </body>
 </html>
