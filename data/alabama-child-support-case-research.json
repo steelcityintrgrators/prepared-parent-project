@@ -1,0 +1,157 @@
+{
+  "version": "2026-10-21",
+  "status": "RESEARCH SEED — CURRENT-TREATMENT AND PINPOINT REVIEW REQUIRED BEFORE PUBLIC LEGAL ANSWERS",
+  "sourcePolicy": "Cases were located through public Alabama appellate-opinion sources. Each case must still receive a current-treatment check, factual-distinction review, and pinpoint verification before being promoted to VERIFIED — ALABAMA AUTHORITY COMPLETE.",
+  "cases": [
+    {
+      "topic": "Accrued arrears / no retroactive forgiveness",
+      "caseName": "Ex parte State ex rel. Lamon",
+      "citation": "702 So. 2d 449 (Ala. 1997)",
+      "court": "Supreme Court of Alabama",
+      "year": 1997,
+      "rule": "Child-support installments become final judgments when due; amounts accruing before a modification petition generally are not modifiable, and a trial court cannot forgive an accrued arrearage.",
+      "url": "https://law.justia.com/cases/alabama/supreme-court/1997/1951838-1.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Arrearage interest",
+      "caseName": "State Department of Human Resources ex rel. McGhee v. McGhee",
+      "citation": "634 So. 2d 573 (Ala. Civ. App. 1994)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 1994,
+      "rule": "Past-due support is a final judgment as it becomes due; when post-judgment interest is properly requested, failure to impose it is error.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/1994/92000513-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Arrearage interest / DHR enforcement",
+      "caseName": "State Department of Human Resources ex rel. Laro v. Gray",
+      "citation": "644 So. 2d 21 (Ala. Civ. App. 1994)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 1994,
+      "rule": "DHR contempt cases involving arrears; properly requested post-judgment interest on child-support arrearages should be awarded.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/1994/92000769-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Rule 32 / parental resources",
+      "caseName": "Ex parte St. Clair County Department of Human Resources",
+      "citation": "612 So. 2d 482 (Ala. 1993)",
+      "court": "Supreme Court of Alabama",
+      "year": 1993,
+      "rule": "Rule 32 child-support determinations consider parental resources, not merely salary or wage income.",
+      "url": "https://law.justia.com/cases/alabama/supreme-court/1993/1920224-1.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Shared physical custody / Rule 32 deviation",
+      "caseName": "Boatfield v. Clough",
+      "citation": "895 So. 2d 354 (Ala. Civ. App. 2004)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2004,
+      "rule": "Joint/shared physical custody may support a deviation from the guidelines, but shared custody did not automatically require deviation under the Rule 32 framework then in effect.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2004/2030163-0.html",
+      "status": "HIGH-PRIORITY RULE-CHANGE REVIEW"
+    },
+    {
+      "topic": "Self-employment income",
+      "caseName": "Puckett v. Summerford",
+      "citation": "706 So. 2d 1257 (Ala. Civ. App. 1997)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 1997,
+      "rule": "For a self-employed parent, the court must consider business net income consistent with Rule 32 rather than relying only on salary or draw.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/1997/2960995-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Business income / self-employment",
+      "caseName": "Hubbard Hall v. Hubbard",
+      "citation": "697 So. 2d 486 (Ala. Civ. App. 1997)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 1997,
+      "rule": "Business profits/net income can be relevant to child-support income; a parent should not benefit from failure to produce requested financial data.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/1997/2960195-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Voluntary underemployment",
+      "caseName": "Herboso v. Herboso",
+      "citation": "881 So. 2d 454 (Ala. Civ. App. 2003)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2003,
+      "rule": "A voluntary-underemployment finding calls for imputed earning capacity to be used within the child-support guidelines rather than simply choosing a support figure outside the guidelines.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2003/2011077-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Contempt / Rule 32 forms / ability to pay",
+      "caseName": "Hayes v. Hayes",
+      "citation": "949 So. 2d 150 (Ala. Civ. App. 2006)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2006,
+      "rule": "Addresses voluntary underemployment, contempt for nonpayment, Rule 32 guideline-form compliance, and incarceration issues.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2006/2040653-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Civil contempt / inability to pay",
+      "caseName": "Peterson v. Roden",
+      "citation": "949 So. 2d 948 (Ala. Civ. App. 2006)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2006,
+      "rule": "Addresses incarceration for civil contempt based on child-support arrears and the obligor's asserted inability to pay the purge amount.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2006/2050394-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Modification / changed circumstances",
+      "caseName": "Cunningham v. Cunningham",
+      "citation": "641 So. 2d 807 (Ala. Civ. App. 1994)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 1994,
+      "rule": "A party seeking modification bears the burden of showing changed circumstances; Rule 32 applies once the modification threshold is met, subject to applicable presumptions and deviation rules.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/1994/93000082-0.html",
+      "status": "treatment-review-required"
+    },
+    {
+      "topic": "Default paternity/support / contempt",
+      "caseName": "H.B. v. P.N.",
+      "citation": "CL-2022-0517 (Ala. Civ. App. Feb. 17, 2023)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2023,
+      "rule": "Recent Jefferson County juvenile-court appeal involving a default paternity judgment, child-support order, and later contempt/arrearage proceedings; useful for default-order and enforcement research.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2023/cl-2022-0517.html",
+      "status": "pinpoint-and-treatment-review-required"
+    },
+    {
+      "topic": "Modification / retroactivity",
+      "caseName": "Wilton Lee Triggs, II v. Brittany Denece Triggs",
+      "citation": "CL-2024-0129 (Ala. Civ. App. Oct. 18, 2024)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2024,
+      "rule": "Recent child-support modification decision discussing material/substantial/continuing change and trial-court discretion concerning retroactivity to the filing date of a modification petition.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2024/cl-2024-0129.html",
+      "status": "pinpoint-and-treatment-review-required"
+    },
+    {
+      "topic": "Accrued arrears / recent reaffirmation",
+      "caseName": "Ja.T. and Jo.T. v. N.T.",
+      "citation": "No. 2200422 (Ala. Civ. App. Nov. 12, 2021)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2021,
+      "rule": "Reaffirms that matured child-support payments become final judgments and accrued arrears cannot simply be forgiven; cites Ex parte Lamon and related authority.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2021/2200422.html",
+      "status": "pinpoint-and-treatment-review-required"
+    },
+    {
+      "topic": "Guideline deviation / written findings",
+      "caseName": "B.C.H., Jr. v. M.H.",
+      "citation": "No. 2180776 (Ala. Civ. App. Sept. 25, 2020)",
+      "court": "Alabama Court of Civil Appeals",
+      "year": 2020,
+      "rule": "A deviation from Rule 32 requires evidence-based findings sufficient to justify the deviation; also discusses retroactive child-support issues.",
+      "url": "https://law.justia.com/cases/alabama/court-of-appeals-civil/2020/2180776.html",
+      "status": "pinpoint-and-treatment-review-required"
+    }
+  ]
+}
