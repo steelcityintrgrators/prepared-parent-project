@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Prepared Parent learning library with verified public-resource content and publication gates for Alabama legal education.">
+<title>Learning Library | The Prepared Parent Project</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="noticebar"><strong>Educational information only.</strong> The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation.</div>
+<header class="site-header">
+  <div class="nav shell">
+    <a class="brand" href="index.html"><span class="logo">PP</span><span><b>The Prepared Parent Project</b><small>Preparing Alabama parents. Strengthening Alabama families.</small></span></a>
+    <nav class="links"><a href="index.html#navigator">Navigator</a><a href="index.html#resources">Resources</a><a href="learn.html">Learning Library</a><a href="disclaimer.html">Disclaimer</a></nav>
+  </div>
+</header>
+<main>
+<section class="section">
+  <div class="shell">
+    <div class="section-head"><p class="eyebrow">Learning library</p><h1 style="font-size:clamp(40px,6vw,68px);color:var(--ink)">Learn from sources you can inspect.</h1><p>General parent education and public-resource material can appear after source review. Alabama legal/court topics remain visibly gated until the required legal authority and review are complete.</p></div>
+    <div class="resource-toolbar">
+      <label style="margin:0">Search topics<input id="q" type="search" placeholder="Search parenting, WIC, child support, court preparation…"></label>
+      <div class="filters">
+        <button class="filter active" data-status="publishable-general">Ready to learn</button>
+        <button class="filter" data-status="legal-gated">Legal gate</button>
+        <button class="filter" data-status="all">All</button>
+      </div>
+    </div>
+    <div id="stats" class="status">Loading library…</div>
+    <div id="grid" class="resource-grid"></div>
+  </div>
+</section>
+</main>
+<footer><div class="shell footer-grid"><div><h3>The Prepared Parent Project</h3><p>Preparing Alabama parents. Strengthening Alabama families.</p></div><p class="footer-disclaimer">Legal-content items marked “Legal gate” are not presented as verified legal education until the applicable Alabama authority and human review requirements are complete.</p></div></footer>
+<script>
+(function(){
+let items=[], mode="publishable-general";
+const q=document.getElementById("q"), grid=document.getElementById("grid"), stats=document.getElementById("stats");
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+function render(){
+ const term=q.value.trim().toLowerCase();
+ const list=items.filter(x=>(mode==="all"||x.status===mode)&&(!term||[x.title,x.topic,x.series,x.source,x.jurisdiction].join(" ").toLowerCase().includes(term)));
+ stats.textContent=list.length+" item"+(list.length===1?"":"s")+" shown";
+ grid.innerHTML=list.length?list.map(x=>{
+   const gated=x.status==="legal-gated";
+   return '<article class="resource"><small>'+esc(x.series)+'</small><h3>'+esc(x.title)+'</h3><p>'+esc(x.topic)+'</p><p class="source">'+esc(x.source)+'</p><div class="'+(gated?'state gated':'state verified')+'">'+(gated?'Legal gate — not yet publishable':'Source reviewed')+'</div><p><a class="btn secondary small" target="_blank" rel="noopener noreferrer" href="'+esc(x.sourceUrl)+'">'+esc(x.cta)+' ↗</a></p>'+(gated?'<div class="notice"><strong>Why gated:</strong> this Alabama legal topic still requires the applicable case-law/authority review and human legal/safety review before it is presented as verified legal education.</div>':'')+'</article>';
+ }).join(""):'<div class="panel"><h3>No matching topics</h3><p>Try another search or status.</p></div>';
+}
+fetch("data/content-library.json").then(r=>r.json()).then(d=>{items=d.items||[];render();}).catch(()=>{stats.textContent="Library unavailable";grid.innerHTML='<div class="panel"><h3>Unable to load the learning library</h3><p>Please return to the home page and try again.</p></div>';});
+q.addEventListener("input",render);
+document.querySelectorAll("[data-status]").forEach(b=>b.addEventListener("click",()=>{mode=b.dataset.status;document.querySelectorAll("[data-status]").forEach(x=>x.classList.toggle("active",x===b));render();}));
+})();
+</script>
+</body>
+</html>
