@@ -21,6 +21,8 @@ jobs:
           test -f data/resource-paths.json
           test -f data/alabama-authority-matrix.csv
           test -f data/content-library.json
+          test -f data/publishing-queue.json
+          test -f docs/BUFFER_PUBLISHING_INTEGRATION.md
       - name: Verify non-law-firm disclaimer
         run: |
           grep -qi "not a law firm" index.html
@@ -29,6 +31,24 @@ jobs:
         run: |
           python -m json.tool data/resource-paths.json >/dev/null
           python -m json.tool data/content-library.json >/dev/null
+          python -m json.tool data/publishing-queue.json >/dev/null
       - name: Check for prohibited law-firm positioning
         run: |
           ! grep -RniE "our attorneys|our legal team|legal consultation|case evaluation|we represent you" --include='*.html' --include='*.md' . 
+
+      - name: Enforce publishing gates
+        run: |
+          python - <<'PY'
+          import json, sys
+          q=json.load(open("data/publishing-queue.json"))
+          bad=[]
+          for r in q.get("records",[]):
+              if r.get("publishGate")=="READY" and r.get("contentType")=="alabama-legal" and r.get("verificationStatus")!="VERIFIED — ALABAMA AUTHORITY COMPLETE":
+                  bad.append(r.get("id"))
+              if r.get("publishGate")=="READY" and not r.get("sourceUrl"):
+                  bad.append(r.get("id"))
+          if bad:
+              print("Unsafe READY publishing records:", sorted(set(bad)))
+              sys.exit(1)
+          print("Publishing gate validation passed")
+          PY
