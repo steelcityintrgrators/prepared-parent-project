@@ -1,0 +1,24 @@
+name: Buffer Connection Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-buffer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Confirm Buffer API secret
+        env:
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$BUFFER_ACCESS_TOKEN" ]; then
+            echo "ERROR: BUFFER_ACCESS_TOKEN is not configured."
+            exit 1
+          fi
+
+          echo "SUCCESS: BUFFER_ACCESS_TOKEN is securely available."
+          echo "The secret value will not be displayed."
