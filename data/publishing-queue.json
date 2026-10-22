@@ -147,10 +147,10 @@
       "assetStatus": "READY",
       "copyStatus": "READY",
       "publishGate": "READY",
-      "reason": "Controlled proof-of-concept publication requested by Ronald. General project/system content only; no individualized legal claim.",
+      "reason": "Controlled proof-of-concept publication requested by Ronald. General project/system content only; no individualized legal claim. Public raw repository asset used to avoid Pages deployment race.",
       "copy": "Prepared Parent Project proof of concept: verified content, branded media, rights-safe audio, and controlled publication across Facebook, Instagram, and YouTube. This is a system test of our educational-content pipeline. The Prepared Parent Project is not a law firm and does not provide legal advice. https://steelcityintrgrators.github.io/prepared-parent-project/ #PreparedParent #AlabamaFamilies",
       "assetKind": "video",
-      "assetUrl": "https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-POC-001.mp4",
+      "assetUrl": "https://raw.githubusercontent.com/steelcityintrgrators/prepared-parent-project/main/media/PP-POC-001.mp4",
       "youtubeTitle": "Prepared Parent Project — Proof of Concept #Shorts",
       "visualQA": {
         "status": "PASSED",
