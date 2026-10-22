@@ -24,4 +24,4 @@ jobs:
       - name: Publish controlled social proof test
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: python scripts/buffer_publish.py --test-social
+        run: python scripts/buffer_publish.py --verify-posts 6ad9aa63deacf5d2533214de 6ad9aa6e282deeeeb2d0a9b3 6ad9aa70b086d40f57380e2a
