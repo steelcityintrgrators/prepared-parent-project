@@ -1,2 +1,2 @@
 PP-008
-retry: asset-preflight-v2
+retry: env-scope-v3
