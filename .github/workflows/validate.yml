@@ -23,6 +23,7 @@ jobs:
           test -f data/content-library.json
           test -f data/publishing-queue.json
           test -f docs/BUFFER_PUBLISHING_INTEGRATION.md
+          test -f docs/EXECUTION_BACKLOG.md
       - name: Verify non-law-firm disclaimer
         run: |
           grep -qi "not a law firm" index.html
@@ -36,7 +37,6 @@ jobs:
         run: |
           # Policy documentation intentionally names prohibited phrases; only public-facing site copy is scanned.
           ! grep -RniE "our attorneys|our legal team|legal consultation|case evaluation|we represent you" --include='*.html' .
-
       - name: Enforce publishing gates
         run: |
           python - <<'PY'
@@ -53,3 +53,13 @@ jobs:
               sys.exit(1)
           print("Publishing gate validation passed")
           PY
+      - name: Prevent connection discovery from publishing
+        run: |
+          ! grep -q -- '--publish-asset' .github/workflows/buffer-api-discovery.yml
+          ! grep -Eq -- 'scripts/buffer_publish.py[[:space:]]+--publish([[:space:]]|$)' .github/workflows/buffer-api-discovery.yml
+      - name: Enforce truthful pre-publish proof scope
+        run: |
+          grep -q '"publicationAttempted":false' .github/workflows/end-to-end-proof.yml
+          grep -q '"livePostVerification":"NOT_RUN"' .github/workflows/end-to-end-proof.yml
+          grep -q '"analyticsFeedback":"NOT_RUN"' .github/workflows/end-to-end-proof.yml
+          grep -q '"visualHumanReview":"NOT_RUN"' .github/workflows/end-to-end-proof.yml
