@@ -38,6 +38,8 @@ def main():
     ap.add_argument("--publish", action="store_true", help="Enable publishing after controlled-test approval")
     args=ap.parse_args()
     token=os.getenv("BUFFER_ACCESS_TOKEN")
+    if token:
+        token=token.strip().strip("\\\"").strip("\\'")
     if not token:
         print("BUFFER_ACCESS_TOKEN is unavailable", file=sys.stderr); return 2
 
@@ -64,7 +66,8 @@ def main():
             print(f"BUFFER_API_HTTP_{e.code}", file=sys.stderr)
             return 3
         except Exception as e:
-            print("BUFFER_API_ERROR", type(e).__name__, file=sys.stderr)
+            safe=str(e).replace(token, "[REDACTED]") if token else str(e)
+            print("BUFFER_API_ERROR", type(e).__name__, safe[:500], file=sys.stderr)
             return 4
 
     if args.publish:
