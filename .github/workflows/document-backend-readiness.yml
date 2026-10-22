@@ -1,0 +1,55 @@
+name: Check Document Backend Deployment Readiness
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/document-backend-readiness.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    env:
+      REVIEW_TOKEN_SECRET: ${{ secrets.REVIEW_TOKEN_SECRET }}
+      DOCUMENT_REVIEW_API_URL: ${{ secrets.DOCUMENT_REVIEW_API_URL }}
+      DOCUMENT_REVIEW_DEPLOY_HOOK_URL: ${{ secrets.DOCUMENT_REVIEW_DEPLOY_HOOK_URL }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report presence only
+        run: |
+          mkdir -p proof
+          python - <<'PY'
+          import json, os
+          names=[
+            "REVIEW_TOKEN_SECRET",
+            "DOCUMENT_REVIEW_API_URL",
+            "DOCUMENT_REVIEW_DEPLOY_HOOK_URL",
+            "OPENAI_API_KEY",
+            "CLOUDFLARE_API_TOKEN",
+            "CLOUDFLARE_ACCOUNT_ID",
+            "RENDER_DEPLOY_HOOK_URL",
+          ]
+          state={name: bool(os.getenv(name)) for name in names}
+          state["deployableWithoutNewUserAction"] = bool(
+              state["REVIEW_TOKEN_SECRET"] and (
+                  state["DOCUMENT_REVIEW_DEPLOY_HOOK_URL"]
+                  or state["RENDER_DEPLOY_HOOK_URL"]
+                  or (state["CLOUDFLARE_API_TOKEN"] and state["CLOUDFLARE_ACCOUNT_ID"])
+              )
+          )
+          state["fullAiDocumentIntelligenceConfigured"] = bool(state["OPENAI_API_KEY"])
+          print(json.dumps(state, indent=2))
+          open("proof/document-backend-readiness.json","w").write(json.dumps(state,indent=2)+"\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prepared-parent-document-backend-readiness
+          path: proof/document-backend-readiness.json
+          retention-days: 30
