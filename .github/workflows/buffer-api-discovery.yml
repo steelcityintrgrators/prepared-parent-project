@@ -2,6 +2,10 @@ name: Buffer API Discovery
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/buffer-api-discovery.yml'
+      - 'scripts/buffer_publish.py'
 
 permissions:
   contents: read
