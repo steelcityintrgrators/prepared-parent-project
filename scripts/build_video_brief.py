@@ -16,8 +16,9 @@ prod={
  "format":{"width":1080,"height":1920,"aspect":"9:16","fps":30},
  "brand":{"name":"The Prepared Parent Project","palette":["#12263A","#F4B942","#FFFFFF"],"tagline":"Preparing Alabama parents. Strengthening Alabama families."},
  "contentPolicy":{"factsLocked":True,"mayParaphraseFacts":False,"mayInventClaims":False,"sourceUrl":b["sourceUrl"],"mediaLicense":"ORIGINAL_OR_VERIFIED_LICENSE_ONLY"},
- "creativeDirection":{"style":"premium warm documentary social video","pace":"confident and engaging","captions":"animated high-contrast burned-in captions","visuals":"relevant family preparedness imagery; diverse families; no sensationalism","music":"subtle uplifting instrumental only if licensed","voiceover":"warm clear professional narration"},
- "scenes":[{"index":i+1,"lockedText":s.get("text",""),"durationSeconds":s.get("duration",6),"visualIntent":"Create or select a visually relevant scene supporting the locked text without adding factual claims."} for i,s in enumerate(scenes)],
+ "creativeDirection":{"style":"premium warm documentary social video","pace":"confident and engaging","captions":"animated high-contrast burned-in captions","visuals":"relevant family preparedness imagery; diverse families; no sensationalism","music":"use only the source brief's rights-cleared audio mode","voiceover":"warm clear professional narration"},
+ "audio":b.get("audio",{"mode":"NONE"}),
+ "scenes":[{"index":i+1,"lockedText":s.get("text",""),"durationSeconds":s.get("seconds",s.get("duration",6)),"visualIntent":"Create or select a visually relevant scene supporting the locked text without adding factual claims."} for i,s in enumerate(scenes)],
  "cta":b.get("cta"),"disclaimer":b.get("disclaimer"),
  "targets":["instagram_reel","facebook_video","youtube_short"],
  "status":"DRAFT_REQUIRES_QC"
