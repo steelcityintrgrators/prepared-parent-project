@@ -9,7 +9,7 @@ on:
       - '.github/workflows/render-shorts.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   render:
@@ -24,6 +24,15 @@ jobs:
           for f in video/briefs/*.json; do
             python scripts/render_short.py "$f"
           done
+      - name: Publish rendered media to site
+        run: |
+          mkdir -p media
+          cp output/PP-008-SHORT.mp4 media/PP-008-SHORT.mp4
+          git config user.name "prepared-parent-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add media/PP-008-SHORT.mp4
+          git diff --cached --quiet || git commit -m "Publish PP-008 social media asset"
+          git push
       - name: Upload rendered videos
         uses: actions/upload-artifact@v4
         with:
