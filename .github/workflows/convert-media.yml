@@ -1,0 +1,53 @@
+name: Convert Prepared Parent Media
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'media/source/**'
+      - 'scripts/convert_media.py'
+      - '.github/workflows/convert-media.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install media engine
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Convert all source media
+        run: |
+          set -e
+          mkdir -p media/generated
+          shopt -s nullglob
+          for f in media/source/*; do
+            base="$(basename "$f")"
+            id="${base%.*}"
+            ext="${base##*.}"
+            case "${ext,,}" in
+              jpg|jpeg|png|webp) kind=image ;;
+              mp4|mov|m4v|webm) kind=video ;;
+              *) echo "Skipping unsupported source: $f"; continue ;;
+            esac
+            python scripts/convert_media.py "$f" --id "$id" --kind "$kind"
+          done
+      - name: Validate generated media
+        run: |
+          find media/generated -type f \( -name '*.jpg' -o -name '*.mp4' \) -print -exec ffprobe -v error {} \;
+      - name: Publish generated derivatives
+        run: |
+          git config user.name "prepared-parent-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add media/generated
+          git diff --cached --quiet || git commit -m "Generate platform-ready media derivatives"
+          git push
+      - name: Upload conversion bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: prepared-parent-converted-media
+          path: media/generated
+          if-no-files-found: warn
+          retention-days: 14
