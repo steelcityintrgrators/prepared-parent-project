@@ -38,21 +38,23 @@ def request_json(url,key,method="GET",payload=None):
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--discover",action="store_true")
+    ap.add_argument("--queue-only",action="store_true")
     ap.add_argument("--publish",action="store_true")
     args=ap.parse_args()
-    raw=os.getenv("BUFFER_API_KEY") or os.getenv("BUFFER_ACCESS_TOKEN")
-    if not raw:
-        print("Buffer API credential unavailable",file=sys.stderr); return 2
-    try: key=clean_key(raw)
-    except ValueError as e:
-        print("BUFFER_CREDENTIAL_INVALID",str(e),file=sys.stderr); return 2
-
     queue=load(QUEUE); ready=[]; blocked=[]
     for r in queue.get("records",[]):
         why=eligible(r)
         (blocked if why else ready).append({"id":r.get("id"),"reasons":why} if why else r)
     print(f"Queue guard: {len(ready)} eligible; {len(blocked)} blocked.")
     for b in blocked: print("BLOCKED",b["id"],"; ".join(b["reasons"]))
+    if args.queue_only: return 0
+
+    raw=os.getenv("BUFFER_API_KEY")
+    if not raw:
+        print("BUFFER_API_KEY unavailable",file=sys.stderr); return 2
+    try: key=clean_key(raw)
+    except ValueError as e:
+        print("BUFFER_CREDENTIAL_INVALID",str(e),file=sys.stderr); return 2
 
     if args.discover:
         base=os.getenv("BUFFER_API_BASE","https://api.buffer.com")
