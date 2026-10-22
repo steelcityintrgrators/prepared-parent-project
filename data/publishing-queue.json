@@ -29,13 +29,14 @@
       "sourceUrl": "https://www.ready.gov/kids/family-emergency-planning",
       "targets": [
         "facebook",
-        "instagram",
-        "youtube"
+        "instagram"
       ],
-      "assetStatus": "NEEDS_CANVA_ASSET",
-      "copyStatus": "DRAFT_REQUIRED",
+      "assetStatus": "CANVA_GENERATION_IN_PROGRESS",
+      "copyStatus": "READY",
       "publishGate": "BLOCKED",
-      "reason": "Controlled test asset and copy not yet finalized."
+      "reason": "Copy finalized. Canva asset generation in progress; Buffer authentication/channel discovery must pass before controlled publication.",
+      "copy": "Could your family find the important information they need during an emergency? A simple family emergency information sheet can keep key contacts, medications and allergies, school or child-care information, and meeting places organized. Prepare it, store it securely, and review it every 6 months. Planning resource: https://www.ready.gov/plan\\n\\nThe Prepared Parent Project — Preparing Alabama parents. Strengthening Alabama families.\\n\\n#PreparedParent #FamilyPreparedness #AlabamaFamilies",
+      "canvaJobId": "7996f680-548b-4b6e-b8b3-d3d57add9cd2"
     },
     {
       "id": "PP-016",
