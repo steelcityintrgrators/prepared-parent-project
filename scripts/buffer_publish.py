@@ -116,7 +116,7 @@ def main():
         for ch in [x for x in channels if x.get("service") in wanted]:
             svc=ch["service"]; cid=ch["id"]
             if args.asset_kind=="image" and svc=="youtube": continue
-            if svc=="facebook": meta="{facebook: {type: "+("reel" if args.asset_kind=="video" else "post")+"}}"
+            if svc=="facebook": meta="{facebook: {type: post}}"
             elif svc=="instagram": meta="{instagram: {type: "+("reel" if args.asset_kind=="video" else "post")+", shouldShareToFeed: true}}"
             else: meta='{youtube: {title: "Prepared Parent #Shorts", categoryId: "26", privacy: public, madeForKids: false, notifySubscribers: true}}'
             assetfield="video" if args.asset_kind=="video" else "image"
@@ -145,7 +145,7 @@ def main():
         for ch in targets:
             cid=ch["id"]; svc=ch.get("service")
             if svc=="facebook":
-                meta="{facebook: {type: reel}}"
+                meta="{facebook: {type: post}}"
             elif svc=="instagram":
                 meta="{instagram: {type: reel, shouldShareToFeed: true}}"
             else:
