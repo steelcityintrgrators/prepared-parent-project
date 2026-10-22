@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "publications": [
+    {
+      "contentId": "PP-008",
+      "publishedAt": "2026-10-22T11:41:01.202685+00:00",
+      "sourceUrl": "https://www.ready.gov/kids/family-emergency-planning",
+      "assetUrl": "https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4",
+      "posts": [
+        {
+          "service": "facebook",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ad9f63bbcda36d1d418d6b4",
+          "status": "sent",
+          "url": "https://facebook.com/1627537305441233"
+        },
+        {
+          "service": "youtube",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ad9f640bcda36d1d418d7f7",
+          "status": "sent",
+          "url": "https://www.youtube.com/watch?v=w055zB8qVj8"
+        },
+        {
+          "service": "instagram",
+          "channel": "thepreparedparentproject",
+          "postId": "6ad9f643e0831046db0e3a04",
+          "status": "sent",
+          "url": "https://www.instagram.com/reel/Dey5fLuIByk/"
+        }
+      ],
+      "verification": "VERIFIED_LIVE"
+    }
+  ]
+}
