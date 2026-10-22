@@ -21,7 +21,12 @@ jobs:
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: python scripts/buffer_publish.py --discover
-      - name: Publish controlled social proof test
+      - name: Publish corrected PP-008 replacement to Facebook Instagram and YouTube
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: python scripts/buffer_publish.py --verify-posts 6ad9aa63deacf5d2533214de 6ad9aa6e282deeeeb2d0a9b3 6ad9aa70b086d40f57380e2a
+        run: >
+          python scripts/buffer_publish.py
+          --publish-asset https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4?v=377ba499
+          --asset-kind video
+          --targets facebook,instagram,youtube
+          --text "Could your family find important information during an emergency? Keep key contacts, medications and allergies organized. Add school and child-care contacts plus two family meeting places. Store the information securely and review it every 6 months. Planning resource: https://www.ready.gov/plan #PreparedParent #FamilyPreparedness #AlabamaFamilies"
