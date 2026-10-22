@@ -26,14 +26,32 @@ def clean_key(value):
         raise ValueError("Buffer API key secret contains non-ASCII characters")
     return value
 
-def request_json(url,key,method="GET",payload=None):
-    # Buffer's current API-key product uses an API key, not the legacy /1 access-token API.
-    headers={"x-api-key":key,"Accept":"application/json","Content-Type":"application/json"}
-    data=None if payload is None else json.dumps(payload).encode("utf-8")
-    req=urllib.request.Request(url,data=data,headers=headers,method=method)
-    with urllib.request.urlopen(req,timeout=30) as resp:
-        raw=resp.read().decode("utf-8")
-        return json.loads(raw) if raw else {}
+def graphql(key, query, variables=None):
+    headers={"Authorization":f"Bearer {key}","Accept":"application/json","Content-Type":"application/json"}
+    data=json.dumps({"query":query,"variables":variables or {}}).encode("utf-8")
+    req=urllib.request.Request("https://api.buffer.com",data=data,headers=headers,method="POST")
+    try:
+        with urllib.request.urlopen(req,timeout=30) as resp:
+            payload=json.loads(resp.read().decode("utf-8") or "{}")
+    except urllib.error.HTTPError as e:
+        body=e.read().decode("utf-8","replace")[:1000]
+        raise RuntimeError(f"Buffer HTTP {e.code}: {body}")
+    if payload.get("errors"):
+        raise RuntimeError("Buffer GraphQL: "+str(payload["errors"][0].get("message","unknown error")))
+    return payload.get("data") or {}
+
+ACCOUNT_QUERY="""query GetAccount {
+  account {
+    id email name
+    organizations { id name }
+  }
+}"""
+
+CHANNELS_QUERY="""query GetChannels($input: ChannelsInput!) {
+  channels(input: $input) {
+    id name displayName service organizationId isDisconnected isLocked
+  }
+}"""
 
 def main():
     ap=argparse.ArgumentParser()
@@ -57,21 +75,24 @@ def main():
         print("BUFFER_CREDENTIAL_INVALID",str(e),file=sys.stderr); return 2
 
     if args.discover:
-        base=os.getenv("BUFFER_API_BASE","https://api.buffer.com")
-        paths=[p for p in os.getenv("BUFFER_DISCOVERY_PATHS","/accounts,/channels,/profiles").split(",") if p]
-        last=None
-        for path in paths:
-            try:
-                result=request_json(base.rstrip("/")+path.strip(),key)
-                print("BUFFER_AUTH_OK",path.strip())
-                print(json.dumps(result,indent=2)[:12000])
-                return 0
-            except urllib.error.HTTPError as e:
-                last=e.code
-                print(f"BUFFER_DISCOVERY_HTTP_{e.code} {path.strip()}")
-            except urllib.error.URLError as e:
-                print("BUFFER_NETWORK_ERROR",type(e.reason).__name__,file=sys.stderr); return 4
-        print(f"BUFFER_DISCOVERY_FAILED last_http={last}",file=sys.stderr); return 3
+        try:
+            account=graphql(key,ACCOUNT_QUERY).get("account") or {}
+            print("BUFFER_AUTH_OK GraphQL")
+            safe_account={k:account.get(k) for k in ("id","name")}
+            safe_account["organizations"]=account.get("organizations") or []
+            print("ACCOUNT",json.dumps(safe_account))
+            organizations=account.get("organizations") or []
+            discovered=[]
+            for org in organizations:
+                oid=org.get("id")
+                if not oid: continue
+                channels=graphql(key,CHANNELS_QUERY,{"input":{"organizationId":oid}}).get("channels") or []
+                discovered.extend(channels)
+            print("CHANNELS",json.dumps(discovered,indent=2)[:12000])
+            Path("data/buffer-state.json").write_text(json.dumps({"accountId":account.get("id"),"organizations":organizations,"channels":discovered},indent=2)+"\\n")
+            return 0
+        except Exception as e:
+            print("BUFFER_DISCOVERY_FAILED",str(e),file=sys.stderr); return 3
 
     if args.publish:
         if not ready:
