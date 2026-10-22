@@ -37,13 +37,27 @@ jobs:
       - name: Validate generated media
         run: |
           find media/generated -type f \( -name '*.jpg' -o -name '*.mp4' \) -print -exec ffprobe -v error {} \;
-      - name: Publish generated derivatives
+      - name: Publish generated derivatives safely
         run: |
           git config user.name "prepared-parent-bot"
           git config user.email "actions@users.noreply.github.com"
           git add media/generated
-          git diff --cached --quiet || git commit -m "Generate platform-ready media derivatives"
-          git push
+          if git diff --cached --quiet; then
+            echo "No generated media changes to publish."
+            exit 0
+          fi
+          git commit -m "Generate platform-ready media derivatives"
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push race detected; retrying safely (attempt $attempt/4)."
+            sleep $((attempt * 3))
+          done
+          echo "Unable to publish generated derivatives after safe retries." >&2
+          exit 1
       - name: Upload conversion bundle
         uses: actions/upload-artifact@v4
         with:
