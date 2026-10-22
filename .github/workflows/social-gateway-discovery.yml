@@ -1,0 +1,30 @@
+name: Social Gateway Discovery
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "social_gateway/**"
+      - ".github/workflows/social-gateway-discovery.yml"
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Discover configured social providers
+        env:
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_FACEBOOK_PAGE_ID: ${{ secrets.META_FACEBOOK_PAGE_ID }}
+          META_INSTAGRAM_ACCOUNT_ID: ${{ secrets.META_INSTAGRAM_ACCOUNT_ID }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: python social_gateway/gateway.py
+      - name: Upload discovery state
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-gateway-discovery
+          path: data/social-gateway-state.json
+          retention-days: 7
