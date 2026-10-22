@@ -1,0 +1,43 @@
+name: Prepared Parent End-to-End Proof
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install production dependencies
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - name: Build guarded AI production brief
+        run: python scripts/build_video_brief.py
+      - name: Render verified content
+        run: python scripts/render_short.py video/briefs/PP-008.json proof/PP-008-PROOF.mp4
+      - name: Technical media QC
+        run: |
+          test -s proof/PP-008-PROOF.mp4
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x proof/PP-008-PROOF.mp4)" = "1080x1920"
+          D=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 proof/PP-008-PROOF.mp4)
+          python -c "d=float('$D'); assert 29 <= d <= 31, d"
+      - name: Verify Buffer and all required channels
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          python scripts/buffer_publish.py --discover | tee proof/buffer.txt
+          grep -q '"service": "facebook"' proof/buffer.txt
+          grep -q '"service": "instagram"' proof/buffer.txt
+          grep -q '"service": "youtube"' proof/buffer.txt
+      - name: Produce proof manifest
+        run: |
+          SHA=$(sha256sum proof/PP-008-PROOF.mp4 | cut -d' ' -f1)
+          printf '{"content":"PP-008","render":"PASS","dimensions":"1080x1920","duration":"30s","bufferAuth":"PASS","channels":["facebook","instagram","youtube"],"sha256":"%s"}\n' "$SHA" > proof/manifest.json
+          cat proof/manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prepared-parent-end-to-end-proof
+          path: proof/
+          if-no-files-found: error
