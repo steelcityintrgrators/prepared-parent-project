@@ -96,28 +96,34 @@ def main():
             print("BUFFER_DISCOVERY_FAILED",str(e),file=sys.stderr); return 3
 
     if args.test_social:
-        # Explicitly approved controlled proof post. Low-risk operational text only.
         account=graphql(key,ACCOUNT_QUERY).get("account") or {}
         orgs=account.get("organizations") or []
         channels=[]
         for org in orgs:
             channels += graphql(key,CHANNELS_QUERY,{"input":{"organizationId":org["id"]}}).get("channels") or []
-        targets=[ch for ch in channels if ch.get("service") in ("facebook","instagram")]
-        proof_text=("The Prepared Parent Project automation system is now live. "
-                    "We are building verified resources to help Alabama parents prepare, organize, and strengthen their families. "
-                    "Preparing Alabama parents. Strengthening Alabama families. #PreparedParent #AlabamaFamilies")
+        targets=[ch for ch in channels if ch.get("service") in ("facebook","instagram","youtube")]
+        media_url="https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4"
+        proof_text=("Could your family find the important information they need during an emergency? "
+                    "Keep key contacts, medications and allergies, school or child-care information, and meeting places organized. "
+                    "Planning resource: https://www.ready.gov/plan #PreparedParent #FamilyPreparedness #AlabamaFamilies")
         results=[]
         for ch in targets:
-            cid=ch["id"]
-            meta = "{facebook: {type: post}}" if ch.get("service")=="facebook" else "{instagram: {type: post, shouldShareToFeed: true}}"
-            mutation=f'''mutation CreatePost($text: String!) {{
-              createPost(input: {{text: $text, channelId: "{cid}", schedulingType: automatic, mode: shareNow, metadata: {meta}}}) {{
+            cid=ch["id"]; svc=ch.get("service")
+            if svc=="facebook":
+                meta="{facebook: {type: reel}}"
+            elif svc=="instagram":
+                meta="{instagram: {type: reel, shouldShareToFeed: true}}"
+            else:
+                meta='{youtube: {title: "Family Emergency Information Sheet #Shorts", categoryId: "26", privacy: public, madeForKids: false, notifySubscribers: true}}'
+            mutation=f'''mutation CreatePost($text: String!, $video: String!) {{
+              createPost(input: {{text: $text, channelId: "{cid}", schedulingType: automatic, mode: shareNow,
+                assets: {{videos: [{{url: $video}}]}}, metadata: {meta}}}) {{
                 ... on PostActionSuccess {{ post {{ id status externalLink }} }}
                 ... on MutationError {{ message }}
               }}
             }}'''
-            out=graphql(key,mutation,{"text":proof_text}).get("createPost") or {}
-            results.append({"service":ch.get("service"),"channel":ch.get("displayName") or ch.get("name"),"result":out})
+            out=graphql(key,mutation,{"text":proof_text,"video":media_url}).get("createPost") or {}
+            results.append({"service":svc,"channel":ch.get("displayName") or ch.get("name"),"result":out})
         print("SOCIAL_PROOF_RESULTS",json.dumps(results,indent=2))
         return 0
     if args.publish:
