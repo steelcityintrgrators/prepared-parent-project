@@ -25,6 +25,7 @@ jobs:
         run: |
           CONTENT_ID="$(head -n 1 verification-trigger.txt | tr -d '\r\n\t ')"
           test -n "$CONTENT_ID"
+          export CONTENT_ID
           echo "CONTENT_ID=$CONTENT_ID" >> "$GITHUB_ENV"
           python - <<'PY' > /tmp/post_ids
           import json, os
