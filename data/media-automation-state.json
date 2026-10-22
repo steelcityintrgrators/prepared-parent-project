@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-10-22",
+  "overallStatus": "OPERATIONAL_WITH_ONE_EXTERNAL_GENERATION_GAP",
+  "websiteMedia": {
+    "status": "DEPLOYED",
+    "responsivePhotoFormatting": "PASSED",
+    "cropPolicy": "Preserve complete branded compositions; do not crop embedded text or faces.",
+    "assets": [
+      "brand-family-banner.png",
+      "prepared-parents-stronger-families.png",
+      "alabama-parent-resources.png",
+      "brand-avatar.png"
+    ]
+  },
+  "photoPipeline": {
+    "sourceIntake": "AUTOMATED",
+    "resizingAndPlatformDerivatives": "AUTOMATED",
+    "responsiveWebsiteFormatting": "AUTOMATED",
+    "generativePhotoCreation": "ASSISTED_EXTERNAL_GENERATION_REQUIRED",
+    "note": "The repository can automatically normalize, resize, validate, deploy, and publish approved/source images. Unattended creation of brand-new AI photos still requires a separately authorized image-generation API or Canva automation."
+  },
+  "videoPipeline": {
+    "briefGeneration": "AUTOMATED_AND_GUARDED",
+    "shortRendering": "AUTOMATED",
+    "dimensions": "1080x1920",
+    "audio": "RIGHTS_SAFE_AUTOMATED",
+    "audioModes": [
+      "ORIGINAL_SYNTHETIC",
+      "VERIFIED_ROYALTY_FREE",
+      "NONE"
+    ],
+    "publishing": "VERIFIED_BUFFER_FACEBOOK_INSTAGRAM_YOUTUBE",
+    "duplicateProtection": "ENABLED",
+    "legalContentGate": "ENABLED"
+  },
+  "latestProof": {
+    "renderRunId": 39788628166,
+    "renderArtifactId": 12429154343,
+    "renderConclusion": "SUCCESS",
+    "streamVerification": {
+      "videoCodec": "h264",
+      "width": 1080,
+      "height": 1920,
+      "videoDurationSeconds": 30,
+      "audioCodec": "aac",
+      "audioDurationSeconds": 30
+    }
+  }
+}
