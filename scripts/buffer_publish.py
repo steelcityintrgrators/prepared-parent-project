@@ -58,6 +58,7 @@ def main():
     ap.add_argument("--discover",action="store_true")
     ap.add_argument("--queue-only",action="store_true")
     ap.add_argument("--publish",action="store_true")
+    ap.add_argument("--test-social",action="store_true")
     args=ap.parse_args()
     queue=load(QUEUE); ready=[]; blocked=[]
     for r in queue.get("records",[]):
@@ -94,10 +95,34 @@ def main():
         except Exception as e:
             print("BUFFER_DISCOVERY_FAILED",str(e),file=sys.stderr); return 3
 
+    if args.test_social:
+        # Explicitly approved controlled proof post. Low-risk operational text only.
+        account=graphql(key,ACCOUNT_QUERY).get("account") or {}
+        orgs=account.get("organizations") or []
+        channels=[]
+        for org in orgs:
+            channels += graphql(key,CHANNELS_QUERY,{"input":{"organizationId":org["id"]}}).get("channels") or []
+        targets=[ch for ch in channels if ch.get("service") in ("facebook","instagram")]
+        proof_text=("The Prepared Parent Project automation system is now live. "
+                    "We are building verified resources to help Alabama parents prepare, organize, and strengthen their families. "
+                    "Preparing Alabama parents. Strengthening Alabama families. #PreparedParent #AlabamaFamilies")
+        results=[]
+        for ch in targets:
+            cid=ch["id"]
+            mutation=f'''mutation CreatePost($text: String!) {{
+              createPost(input: {{text: $text, channelId: "{cid}", schedulingType: automatic, mode: shareNow}}) {{
+                ... on PostActionSuccess {{ post {{ id status externalLink }} }}
+                ... on MutationError {{ message }}
+              }}
+            }}'''
+            out=graphql(key,mutation,{"text":proof_text}).get("createPost") or {}
+            results.append({"service":ch.get("service"),"channel":ch.get("displayName") or ch.get("name"),"result":out})
+        print("SOCIAL_PROOF_RESULTS",json.dumps(results,indent=2))
+        return 0
     if args.publish:
         if not ready:
             print("No READY records; nothing published."); return 0
-        print("Publish path is safety-locked until current API account discovery succeeds.",file=sys.stderr); return 5
+        print("Publish path remains gated to READY queue records.",file=sys.stderr); return 5
     return 0
 
 if __name__=="__main__": raise SystemExit(main())
