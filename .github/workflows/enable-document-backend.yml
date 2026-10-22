@@ -1,0 +1,46 @@
+name: Enable Secure Document Review Frontend
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    env:
+      DOCUMENT_REVIEW_API_URL: ${{ secrets.DOCUMENT_REVIEW_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Require configured API URL and verify health
+        run: |
+          test -n "$DOCUMENT_REVIEW_API_URL"
+          curl --fail --silent --show-error --max-time 30 "$DOCUMENT_REVIEW_API_URL/api/health" > /tmp/health.json
+          python - <<'PY'
+          import json
+          h=json.load(open("/tmp/health.json"))
+          assert h.get("ok") is True
+          assert h.get("zeroRetention") is True
+          assert h.get("legalAuthorityGate")=="ENFORCED"
+          PY
+      - name: Enable secure review mode
+        run: |
+          python - <<'PY'
+          import json, os
+          url=os.environ["DOCUMENT_REVIEW_API_URL"].rstrip("/")
+          content='window.PREPARED_PARENT_CONFIG = Object.freeze({\n'
+          content+=f'  documentReviewApi: {json.dumps(url)},\n'
+          content+='  secureDocumentReview: true,\n'
+          content+='  configuredAt: "GitHub Actions verified"\n'
+          content+='});\n'
+          open("assets/runtime-config.js","w").write(content)
+          PY
+          git config user.name "prepared-parent-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/runtime-config.js
+          git commit -m "Enable verified secure document review backend"
+          git pull --rebase origin main
+          git push origin HEAD:main
