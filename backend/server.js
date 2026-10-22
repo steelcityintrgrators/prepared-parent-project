@@ -445,6 +445,9 @@ app.delete("/api/review/:id", requireToken, (req,res)=>{
 });
 
 app.use((err,req,res,next)=>{
+  if (err && err.message==="Origin not allowed") {
+    return res.status(403).json({error:"ORIGIN_NOT_ALLOWED",message:"This origin is not allowed to use the document-review service."});
+  }
   const status=err && (err.code==="LIMIT_FILE_SIZE" || err.code==="LIMIT_FILE_COUNT") ? 413 : 400;
   res.status(status).json({error:"UPLOAD_REJECTED",message:"The upload was rejected by the document-safety limits."});
 });
