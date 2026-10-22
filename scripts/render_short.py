@@ -23,11 +23,15 @@ def main():
     filters.append(f"drawtext=fontfile={font}:text='THE PREPARED PARENT PROJECT':fontcolor={ACCENT}:fontsize=42:x=(w-text_w)/2:y=175")
     for i,s in enumerate(b["scenes"]):
         start=t; end=t+int(s["seconds"]); t=end
-        txt=esc(s["text"])
-        filters.append(f"drawtext=fontfile={font}:text='{txt}':fontcolor={WHITE}:fontsize=64:line_spacing=20:x=(w-text_w)/2:y=(h-text_h)/2:enable='between(t,{start},{end})'")
+        txtfile=f"/tmp/scene_{i}.txt"
+        Path(txtfile).write_text(s["text"], encoding="utf-8")
+        filters.append(f"drawtext=fontfile={font}:textfile={txtfile}:fontcolor={WHITE}:fontsize=64:line_spacing=20:x=(w-text_w)/2:y=(h-text_h)/2:enable='between(t,{start},{end})'")
         filters.append(f"drawtext=fontfile={font}:text='{i+1}/{len(b['scenes'])}':fontcolor={ACCENT}:fontsize=34:x=(w-text_w)/2:y=1600:enable='between(t,{start},{end})'")
-    filters.append(f"drawtext=fontfile={font}:text='{esc(b.get('cta',''))}':fontcolor={WHITE}:fontsize=30:x=(w-text_w)/2:y=1740")
-    filters.append(f"drawtext=fontfile={font}:text='{esc(b.get('disclaimer',''))}':fontcolor={WHITE}:fontsize=24:x=(w-text_w)/2:y=1800")
+    cta="/tmp/cta.txt"; disclaimer="/tmp/disclaimer.txt"
+    Path(cta).write_text(b.get("cta",""), encoding="utf-8")
+    Path(disclaimer).write_text(b.get("disclaimer",""), encoding="utf-8")
+    filters.append(f"drawtext=fontfile={font}:textfile={cta}:fontcolor={WHITE}:fontsize=30:x=(w-text_w)/2:y=1740")
+    filters.append(f"drawtext=fontfile={font}:textfile={disclaimer}:fontcolor={WHITE}:fontsize=24:x=(w-text_w)/2:y=1800")
     cmd=["ffmpeg","-y","-f","lavfi","-i",f"color=c={BG}:s={W}x{H}:r={FPS}:d={t}","-vf",",".join(filters),"-c:v","libx264","-pix_fmt","yuv420p","-movflags","+faststart",str(out)]
     subprocess.run(cmd,check=True)
     subprocess.run(["ffprobe","-v","error","-show_entries","format=duration","-of","default=nw=1:nk=1",str(out)],check=True)
