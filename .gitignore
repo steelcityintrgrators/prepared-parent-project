@@ -1,0 +1,31 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials/
+secrets/
+service-account*.json
+
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+
+# Never commit private program data
+backups/
+exports/
+intake-data/
+donor-data/
+case-files/
+court-records/
+child-data/
+board-confidential/
+*.sqlite
+*.db
