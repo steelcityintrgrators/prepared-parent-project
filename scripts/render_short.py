@@ -2,8 +2,12 @@
 import json, subprocess, sys, textwrap
 from pathlib import Path
 
+ROOT=Path(__file__).resolve().parents[1]
+BRAND=json.loads((ROOT/"data"/"brand-system.json").read_text())
 W,H,FPS=1080,1920,30
-BG="#12263A"; ACCENT="#F4B942"; WHITE="#FFFFFF"
+BG=BRAND["colors"]["navy"]["hex"]
+ACCENT=BRAND["colors"]["gold"]["hex"]
+WHITE=BRAND["colors"]["white"]["hex"]
 FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 # Reel/Short safe canvas: keep essential text away from app chrome.
 LEFT,RIGHT,TOP,BOTTOM=110,970,260,1450
