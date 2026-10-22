@@ -1,0 +1,39 @@
+{
+  "id": "PP-008-SHORT",
+  "sourceContentId": "PP-008",
+  "contentType": "general-resource",
+  "publishGate": "READY",
+  "videoGate": "READY",
+  "sourceUrl": "https://www.ready.gov/plan",
+  "title": "Could your family find the important information in an emergency?",
+  "scenes": [
+    {
+      "seconds": 6,
+      "text": "Could your family find the important information they need in an emergency?"
+    },
+    {
+      "seconds": 6,
+      "text": "Keep key contacts, medications and allergies organized."
+    },
+    {
+      "seconds": 6,
+      "text": "Add school or child-care contacts and two meeting places."
+    },
+    {
+      "seconds": 6,
+      "text": "Store the sheet securely. Don't post private family information publicly."
+    },
+    {
+      "seconds": 6,
+      "text": "Review it every 6 months.\\nPrepared parents. Stronger families."
+    }
+  ],
+  "cta": "Planning resource: Ready.gov/plan",
+  "disclaimer": "General educational information • The Prepared Parent Project",
+  "targets": [
+    "instagram",
+    "facebook",
+    "youtube"
+  ],
+  "mediaLicense": "ORIGINAL_TEMPLATE_ONLY"
+}
