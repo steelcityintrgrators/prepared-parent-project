@@ -23,7 +23,7 @@ jobs:
 
       - name: Resolve selected content
         run: |
-          CONTENT_ID="$(tr -d '\r\n\t ' < publish-trigger.txt)"
+          CONTENT_ID="$(head -n 1 publish-trigger.txt | tr -d '\r\n\t ')"
           test -n "$CONTENT_ID"
           echo "CONTENT_ID=$CONTENT_ID" >> "$GITHUB_ENV"
 
@@ -41,8 +41,14 @@ jobs:
           with open(os.environ["GITHUB_ENV"],"a") as f:
               f.write("ASSET_URL="+r["assetUrl"]+"\n")
           PY
-          curl --fail --silent --show-error --location --range 0-15 --output /tmp/asset-head "$ASSET_URL"
-          test -s /tmp/asset-head
+          python - <<'PY'
+          import os, urllib.request
+          req=urllib.request.Request(os.environ["ASSET_URL"], headers={"Range":"bytes=0-15","User-Agent":"PreparedParentPublisher/1.0"})
+          with urllib.request.urlopen(req, timeout=30) as response:
+              data=response.read(16)
+              assert data, "hosted asset returned no bytes"
+              assert response.status in (200,206), response.status
+          PY
 
       - name: Publish selected READY content
         env:
