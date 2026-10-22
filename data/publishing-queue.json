@@ -36,7 +36,7 @@
       "copyStatus": "READY",
       "publishGate": "VERIFIED_LIVE",
       "reason": "Published through the queue-gated Buffer workflow and verified live by post lookup.",
-      "copy": "Could your family find the important information they need during an emergency? A simple family emergency information sheet can keep key contacts, medications and allergies, school or child-care information, and meeting places organized. Prepare it, store it securely, and review it every 6 months. Planning resource: https://www.ready.gov/plan\\n\\nThe Prepared Parent Project — Preparing Alabama parents. Strengthening Alabama families.\\n\\n#PreparedParent #FamilyPreparedness #AlabamaFamilies",
+      "copy": "Could your family find the important information they need during an emergency? A simple family emergency information sheet can keep key contacts, medications and allergies, school or child-care information, and meeting places organized. Prepare it, store it securely, and review it every 6 months. Planning resource: https://www.ready.gov/plan\\n\\nThe Prepared Parent Project \u2014 Preparing Alabama parents. Strengthening Alabama families.\\n\\n#PreparedParent #FamilyPreparedness #AlabamaFamilies",
       "assetKind": "video",
       "assetUrl": "https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4",
       "youtubeTitle": "Family Emergency Information Sheet #Shorts",
@@ -146,12 +146,12 @@
       ],
       "assetStatus": "READY",
       "copyStatus": "READY",
-      "publishGate": "READY",
-      "reason": "Controlled proof-of-concept publication requested by Ronald. General project/system content only; no individualized legal claim. Public raw repository asset used to avoid Pages deployment race.",
+      "publishGate": "PUBLISHING",
+      "reason": "Buffer accepted the approved posts. Live-link verification is in progress; this PUBLISHING lock prevents duplicate retries.",
       "copy": "Prepared Parent Project proof of concept: verified content, branded media, rights-safe audio, and controlled publication across Facebook, Instagram, and YouTube. This is a system test of our educational-content pipeline. The Prepared Parent Project is not a law firm and does not provide legal advice. https://steelcityintrgrators.github.io/prepared-parent-project/ #PreparedParent #AlabamaFamilies",
       "assetKind": "video",
       "assetUrl": "https://raw.githubusercontent.com/steelcityintrgrators/prepared-parent-project/main/media/PP-POC-001.mp4",
-      "youtubeTitle": "Prepared Parent Project — Proof of Concept #Shorts",
+      "youtubeTitle": "Prepared Parent Project \u2014 Proof of Concept #Shorts",
       "visualQA": {
         "status": "PASSED",
         "dimensions": "1080x1920",
@@ -159,7 +159,32 @@
         "audio": "AAC rights-safe original synthesized audio",
         "checked": "2026-10-22",
         "notes": "Renderer completed successfully; ffprobe confirmed H.264 1080x1920 video and AAC audio, both 15 seconds."
-      }
+      },
+      "publicationStatus": "PUBLISHING",
+      "publishedAt": "2026-10-22T14:05:10.328090+00:00",
+      "bufferPosts": [
+        {
+          "service": "facebook",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ada1803eb1348c17ac23386",
+          "status": "sent",
+          "externalLink": "https://facebook.com/2951934521865933"
+        },
+        {
+          "service": "youtube",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ada18091cc831fdc3bffa1c",
+          "status": "sent",
+          "externalLink": "https://www.youtube.com/watch?v=taYQEAk-AeE"
+        },
+        {
+          "service": "instagram",
+          "channel": "thepreparedparentproject",
+          "postId": "6ada180ca6a09108d26d2d91",
+          "status": "sending",
+          "externalLink": null
+        }
+      ]
     }
   ]
 }
