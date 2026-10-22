@@ -146,8 +146,8 @@
       ],
       "assetStatus": "READY",
       "copyStatus": "READY",
-      "publishGate": "PUBLISHING",
-      "reason": "Buffer accepted the approved posts. Live-link verification is in progress; this PUBLISHING lock prevents duplicate retries.",
+      "publishGate": "VERIFIED_LIVE",
+      "reason": "Published through the queue-gated Buffer workflow and verified live by verification-only post lookup.",
       "copy": "Prepared Parent Project proof of concept: verified content, branded media, rights-safe audio, and controlled publication across Facebook, Instagram, and YouTube. This is a system test of our educational-content pipeline. The Prepared Parent Project is not a law firm and does not provide legal advice. https://steelcityintrgrators.github.io/prepared-parent-project/ #PreparedParent #AlabamaFamilies",
       "assetKind": "video",
       "assetUrl": "https://raw.githubusercontent.com/steelcityintrgrators/prepared-parent-project/main/media/PP-POC-001.mp4",
@@ -160,7 +160,7 @@
         "checked": "2026-10-22",
         "notes": "Renderer completed successfully; ffprobe confirmed H.264 1080x1920 video and AAC audio, both 15 seconds."
       },
-      "publicationStatus": "PUBLISHING",
+      "publicationStatus": "VERIFIED_LIVE",
       "publishedAt": "2026-10-22T14:05:10.328090+00:00",
       "bufferPosts": [
         {
@@ -183,6 +183,29 @@
           "postId": "6ada180ca6a09108d26d2d91",
           "status": "sending",
           "externalLink": null
+        }
+      ],
+      "livePosts": [
+        {
+          "service": "facebook",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ada1803eb1348c17ac23386",
+          "status": "sent",
+          "url": "https://facebook.com/2951934521865933"
+        },
+        {
+          "service": "youtube",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ada18091cc831fdc3bffa1c",
+          "status": "sent",
+          "url": "https://www.youtube.com/shorts/taYQEAk-AeE"
+        },
+        {
+          "service": "instagram",
+          "channel": "thepreparedparentproject",
+          "postId": "6ada180ca6a09108d26d2d91",
+          "status": "sent",
+          "url": "https://www.instagram.com/reel/DezKNNQgeJF/"
         }
       ]
     }
