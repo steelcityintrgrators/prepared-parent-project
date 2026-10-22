@@ -1,0 +1,37 @@
+{
+  "id": "PP-POC-001",
+  "sourceContentId": "PP-POC-001",
+  "contentType": "general-resource",
+  "publishGate": "READY",
+  "videoGate": "READY",
+  "sourceUrl": "https://steelcityintrgrators.github.io/prepared-parent-project/",
+  "title": "Prepared Parent Project — Proof of Concept",
+  "scenes": [
+    {
+      "seconds": 5,
+      "text": "PREPARED PARENT\nSYSTEM TEST"
+    },
+    {
+      "seconds": 5,
+      "text": "Verified content.\nBranded media.\nRights-safe audio."
+    },
+    {
+      "seconds": 5,
+      "text": "Facebook • Instagram • YouTube\nProof of concept"
+    }
+  ],
+  "cta": "PreparedParentProject.org prototype • Alabama parent education",
+  "disclaimer": "System proof of concept • General educational information",
+  "targets": [
+    "facebook",
+    "instagram",
+    "youtube"
+  ],
+  "mediaLicense": "ORIGINAL_TEMPLATE_ONLY",
+  "audio": {
+    "mode": "ORIGINAL_SYNTHETIC",
+    "license": "PROJECT_ORIGINAL",
+    "targetVolumeDb": -22,
+    "description": "Original synthesized ambient bed generated inside the Prepared Parent rendering pipeline."
+  }
+}
