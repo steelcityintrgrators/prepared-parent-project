@@ -59,3 +59,21 @@
   display:block;width:100%;height:auto;max-height:none;object-fit:contain;background:#fff
 }
 .learning-media figcaption{padding:14px 18px;background:#fff;color:var(--muted);font-size:13px;font-weight:700}
+
+
+/* Document Review beta */
+.doc-review-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:start;margin-top:28px}
+.doc-intake,.doc-results{min-height:100%}
+.doc-intake input[type="file"]{
+  width:100%;margin-top:6px;border:1px dashed #b9c8c0;border-radius:14px;padding:14px;background:#f8faf9
+}
+.doc-privacy{font-size:12px;color:var(--muted);background:#f8faf9;border:1px solid var(--line);border-radius:12px;padding:12px}
+.doc-results h3{margin-top:22px;margin-bottom:8px}
+.doc-results ul{padding-left:20px}
+.doc-results li{margin-bottom:7px}
+.doc-next{padding-bottom:0}
+@media(max-width:900px){.doc-review-grid{grid-template-columns:1fr}}
+@media print{
+  .doc-intake,.site-header,.noticebar,footer,.doc-next{display:none!important}
+  .doc-review-grid{display:block}.doc-results{border:0;box-shadow:none}
+}
