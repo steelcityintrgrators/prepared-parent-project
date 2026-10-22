@@ -26,6 +26,12 @@ def eligible(record):
     return reasons
 
 def request_json(url, token, method="GET", payload=None):
+    # Reject malformed secret values before urllib tries to encode HTTP headers.
+    # This reports only safe metadata, never the credential itself.
+    try:
+        token.encode("latin-1")
+    except UnicodeEncodeError:
+        raise ValueError("BUFFER_ACCESS_TOKEN contains non-HTTP-header characters")
     headers={"Authorization": f"Bearer {token}", "Accept":"application/json", "Content-Type":"application/json"}
     data=None if payload is None else json.dumps(payload).encode()
     req=urllib.request.Request(url, data=data, headers=headers, method=method)
