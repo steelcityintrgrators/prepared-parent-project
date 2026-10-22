@@ -1,11 +1,36 @@
 {
-  "version": "1.0.0",
-  "mode": "CONTROLLED_TEST",
+  "version": "2.0.0",
+  "mode": "LIVE_VERIFIED",
+  "provider": "Buffer GraphQL",
+  "publishingEnabled": true,
   "channels": {
-    "facebook": {"status": "CONNECTED_REPORTED_NOT_API_VERIFIED", "externalId": null, "tested": false},
-    "instagram": {"status": "CONNECTED_REPORTED_NOT_API_VERIFIED", "externalId": null, "tested": false},
-    "youtube": {"status": "CONNECTED_REPORTED_NOT_API_VERIFIED", "externalId": null, "tested": false}
+    "facebook": {
+      "status": "VERIFIED_LIVE",
+      "channelId": "6ad94304778b240e2f82f1ef",
+      "displayName": "The Prepared Parent Project",
+      "tested": true,
+      "lastPostUrl": "https://facebook.com/1627537305441233"
+    },
+    "instagram": {
+      "status": "VERIFIED_LIVE",
+      "channelId": "6ad93fa9778b240e2f82daee",
+      "displayName": "thepreparedparentproject",
+      "tested": true,
+      "lastPostUrl": "https://www.instagram.com/reel/Dey5fLuIByk/"
+    },
+    "youtube": {
+      "status": "VERIFIED_LIVE",
+      "channelId": "6ad94036778b240e2f82e0b8",
+      "displayName": "The Prepared Parent Project",
+      "tested": true,
+      "lastPostUrl": "https://www.youtube.com/watch?v=w055zB8qVj8"
+    }
   },
-  "lastDiscovery": null,
-  "publishingEnabled": false
+  "lastDiscovery": "2026-10-22T10:55:56Z",
+  "lastVerifiedPublish": "2026-10-22T11:41:51Z",
+  "proof": {
+    "workflowRunId": 39772368613,
+    "artifactId": 12422748033,
+    "contentId": "PP-008"
+  }
 }
