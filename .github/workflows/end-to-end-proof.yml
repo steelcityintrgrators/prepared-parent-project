@@ -1,4 +1,4 @@
-name: Prepared Parent End-to-End Proof
+name: Prepared Parent Pre-Publish Technical Proof
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
           test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x proof/PP-008-PROOF.mp4)" = "1080x1920"
           D=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 proof/PP-008-PROOF.mp4)
           python -c "d=float('$D'); assert 29 <= d <= 31, d"
-      - name: Verify Buffer and all required channels
+      - name: Verify Buffer authentication and required channels
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: |
@@ -35,13 +35,14 @@ jobs:
           grep -q '"service": "facebook"' proof/buffer.txt
           grep -q '"service": "instagram"' proof/buffer.txt
           grep -q '"service": "youtube"' proof/buffer.txt
-      - name: Produce proof manifest
+      - name: Produce truthful pre-publish proof manifest
         run: |
           SHA=$(sha256sum proof/PP-008-PROOF.mp4 | cut -d' ' -f1)
-          printf '{"content":"PP-008","render":"PASS","dimensions":"1080x1920","duration":"30s","bufferAuth":"PASS","channels":["facebook","instagram","youtube"],"sha256":"%s"}\n' "$SHA" > proof/manifest.json
+          printf '{"content":"PP-008","proofStage":"PRE_PUBLISH_TECHNICAL","render":"PASS","dimensions":"1080x1920","duration":"30s","bufferAuth":"PASS","channels":["facebook","instagram","youtube"],"publicationAttempted":false,"livePostVerification":"NOT_RUN","analyticsFeedback":"NOT_RUN","visualHumanReview":"NOT_RUN","sha256":"%s"}\n' "$SHA" > proof/manifest.json
           cat proof/manifest.json
       - uses: actions/upload-artifact@v4
         with:
-          name: prepared-parent-end-to-end-proof
+          name: prepared-parent-pre-publish-proof
           path: proof/
           if-no-files-found: error
+          retention-days: 90
