@@ -59,6 +59,7 @@ def main():
     ap.add_argument("--queue-only",action="store_true")
     ap.add_argument("--publish",action="store_true")
     ap.add_argument("--test-social",action="store_true")
+    ap.add_argument("--verify-posts",nargs="*")
     args=ap.parse_args()
     queue=load(QUEUE); ready=[]; blocked=[]
     for r in queue.get("records",[]):
@@ -95,6 +96,13 @@ def main():
         except Exception as e:
             print("BUFFER_DISCOVERY_FAILED",str(e),file=sys.stderr); return 3
 
+    if args.verify_posts is not None:
+        q="""query FindPost($id: PostId!) { post(input: {id: $id}) { id status externalLink error { message } } }"""
+        results=[]
+        for pid in args.verify_posts:
+            try: results.append(graphql(key,q,{"id":pid}).get("post"))
+            except Exception as e: results.append({"id":pid,"lookupError":str(e)})
+        print("POST_VERIFICATION",json.dumps(results,indent=2)); return 0
     if args.test_social:
         account=graphql(key,ACCOUNT_QUERY).get("account") or {}
         orgs=account.get("organizations") or []
