@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-10-22",
+  "identity": {
+    "name": "The Prepared Parent Project",
+    "missionLine": "Preparing Alabama parents. Strengthening Alabama families.",
+    "audience": "All parents, supporters, community partners, donors, and service organizations in Alabama",
+    "traits": [
+      "credible",
+      "calm",
+      "prepared",
+      "supportive",
+      "professional",
+      "accessible",
+      "family-oriented",
+      "trustworthy"
+    ],
+    "exclusions": [
+      "law-firm positioning",
+      "gavels or scales of justice",
+      "gendered parent stereotypes",
+      "aggressive imagery",
+      "excessive gradients",
+      "clutter"
+    ]
+  },
+  "colors": {
+    "navy": {
+      "hex": "#102A43",
+      "role": "Primary brand / trust / headers"
+    },
+    "green": {
+      "hex": "#2F7666",
+      "role": "Support / family stability / secondary actions"
+    },
+    "gold": {
+      "hex": "#D99136",
+      "role": "Preparedness / emphasis / accent"
+    },
+    "ink": {
+      "hex": "#17324D",
+      "role": "Body text"
+    },
+    "paper": {
+      "hex": "#F5F7F5",
+      "role": "Primary light background"
+    },
+    "white": {
+      "hex": "#FFFFFF",
+      "role": "High-contrast reverse text and cards"
+    }
+  },
+  "typography": {
+    "webStack": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+    "productionFallback": "DejaVu Sans Bold for automated video until a licensed cross-platform brand font is bundled",
+    "principles": [
+      "high legibility",
+      "strong heading hierarchy",
+      "mobile-first sizing",
+      "avoid decorative legal-style serif treatments"
+    ]
+  },
+  "visualSystem": {
+    "cornerRadius": "12–18px on cards and calls to action",
+    "shadows": "soft, restrained, low-elevation",
+    "photography": "realistic, diverse Alabama families and community contexts; avoid staged legal imagery",
+    "illustration": "simple editorial shapes and icons; no clip-art look",
+    "contentSafeZones": "keep essential text clear of Reel/Short app chrome and platform crop zones"
+  },
+  "legalCommunication": {
+    "disclaimer": "The Prepared Parent Project is not a law firm. Information provided is for general educational and informational purposes and is not legal advice.",
+    "alabamaLegalGate": "Alabama legal/court content may publish only after required authoritative-source and case-law review is complete."
+  },
+  "canva": {
+    "contentEngineFolderId": "FAHYqZT6h0s",
+    "brandGovernanceFolderId": "FAHYtWSlUPQ",
+    "platformAdaptationsFolderId": "FAHYuyDPQIs",
+    "visualReferenceDesignId": "DAHYqbVmSaI",
+    "canonicalLogoStatus": "AWAITING_CANVA_WIDGET_CONFIRMATION"
+  }
+}
