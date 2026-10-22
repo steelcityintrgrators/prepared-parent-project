@@ -35,5 +35,11 @@
     "facebook",
     "youtube"
   ],
-  "mediaLicense": "ORIGINAL_TEMPLATE_ONLY"
+  "mediaLicense": "ORIGINAL_TEMPLATE_ONLY",
+  "audio": {
+    "mode": "ORIGINAL_SYNTHETIC",
+    "license": "PROJECT_ORIGINAL",
+    "targetVolumeDb": -22,
+    "description": "Subtle original synthesized ambient chord bed generated inside the Prepared Parent rendering pipeline. No third-party recording is used."
+  }
 }
