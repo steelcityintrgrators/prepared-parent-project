@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/end-to-end-proof.yml'
+      - 'proof-trigger.txt'
 
 permissions:
   contents: read
