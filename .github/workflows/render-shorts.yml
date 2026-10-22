@@ -24,15 +24,29 @@ jobs:
           for f in video/briefs/*.json; do
             python scripts/render_short.py "$f"
           done
-      - name: Publish rendered media to site
+      - name: Publish rendered media to site safely
         run: |
           mkdir -p media
-          cp output/PP-008-SHORT.mp4 media/PP-008-SHORT.mp4
+          cp output/*.mp4 media/
           git config user.name "prepared-parent-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add media/PP-008-SHORT.mp4
-          git diff --cached --quiet || git commit -m "Publish PP-008 social media asset"
-          git push
+          git add media/*.mp4
+          if git diff --cached --quiet; then
+            echo "No rendered media changes to publish."
+            exit 0
+          fi
+          git commit -m "Publish rendered Prepared Parent social media"
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push race detected; retrying safely (attempt $attempt/4)."
+            sleep $((attempt * 3))
+          done
+          echo "Unable to publish rendered media after safe retries." >&2
+          exit 1
       - name: Upload rendered videos
         uses: actions/upload-artifact@v4
         with:
