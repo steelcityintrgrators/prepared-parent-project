@@ -26,6 +26,10 @@ jobs:
           test -f data/brand-system.json
           test -f data/audio-license-policy.json
           test -f data/publication-log.json
+          test -f assets/runtime-config.js
+          test -f assets/document-review.js
+          test -f backend/server.js
+          test -f backend/package.json
           test -f docs/BUFFER_PUBLISHING_INTEGRATION.md
           test -f docs/EXECUTION_BACKLOG.md
       - name: Verify non-law-firm disclaimer
@@ -78,7 +82,10 @@ jobs:
           grep -qi "not a law firm" document-review.html
           grep -qi "does not tell you what you are legally required to file" document-review.html
           grep -qi "fail-closed rule" document-review.html
-          grep -qi "files selected here stay in this browser" document-review.html
+          grep -qi "No file is transmitted until" document-review.html
+          grep -q "secureDocumentReview" assets/runtime-config.js
+          grep -q "X-Review-Token" assets/document-review.js
+          grep -q "LEGAL REVIEW REQUIRED" assets/document-review.js
       - name: Check public site for prohibited law-firm positioning
         run: |
           # Policy documentation intentionally names prohibited phrases; only public-facing site copy is scanned.
