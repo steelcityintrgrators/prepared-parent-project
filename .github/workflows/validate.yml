@@ -16,6 +16,7 @@ jobs:
           test -f resources.html
           test -f disclaimer.html
           test -f learn.html
+          test -f document-review.html
           test -f assets/styles.css
           test -f assets/app.js
           test -f data/resource-paths.json
@@ -72,6 +73,12 @@ jobs:
           assert "max-height:none" in css, "Learning Library media crop guard missing"
           print("Media-rights and responsive-photo validation passed")
           PY
+      - name: Enforce Document Review safety language
+        run: |
+          grep -qi "not a law firm" document-review.html
+          grep -qi "does not tell you what you are legally required to file" document-review.html
+          grep -qi "fail-closed rule" document-review.html
+          grep -qi "files selected here stay in this browser" document-review.html
       - name: Check public site for prohibited law-firm positioning
         run: |
           # Policy documentation intentionally names prohibited phrases; only public-facing site copy is scanned.
