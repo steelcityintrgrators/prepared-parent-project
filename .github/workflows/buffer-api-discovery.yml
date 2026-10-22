@@ -1,11 +1,7 @@
-name: Buffer API Discovery
+name: Buffer Connection Discovery (No Publishing)
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/buffer-api-discovery.yml'
-      - 'scripts/buffer_publish.py'
 
 permissions:
   contents: read
@@ -17,16 +13,22 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate queue safety gates
         run: python scripts/buffer_publish.py --queue-only
-      - name: Authenticate to Buffer and discover channels
+      - name: Authenticate to Buffer and discover required channels
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: python scripts/buffer_publish.py --discover
-      - name: Publish corrected PP-008 replacement to Facebook Instagram and YouTube
-        env:
-          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-        run: >
-          python scripts/buffer_publish.py
-          --publish-asset https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4?v=377ba499
-          --asset-kind video
-          --targets facebook,instagram,youtube
-          --text "Could your family find important information during an emergency? Keep key contacts, medications and allergies organized. Add school and child-care contacts plus two family meeting places. Store the information securely and review it every 6 months. Planning resource: https://www.ready.gov/plan #PreparedParent #FamilyPreparedness #AlabamaFamilies"
+        run: |
+          python scripts/buffer_publish.py --discover | tee buffer-discovery.txt
+          grep -q '"service": "facebook"' buffer-discovery.txt
+          grep -q '"service": "instagram"' buffer-discovery.txt
+          grep -q '"service": "youtube"' buffer-discovery.txt
+      - name: Record non-publishing discovery evidence
+        run: |
+          printf '%s\n'             'This workflow validates queue gates, Buffer authentication, and required channel discovery.'             'It does not create, schedule, modify, or publish any social post.'             > BUFFER_DISCOVERY_SCOPE.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: buffer-connection-discovery
+          path: |
+            buffer-discovery.txt
+            BUFFER_DISCOVERY_SCOPE.txt
+          if-no-files-found: error
+          retention-days: 30
