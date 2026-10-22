@@ -34,9 +34,9 @@
       ],
       "assetStatus": "READY",
       "copyStatus": "READY",
-      "publishGate": "READY",
-      "reason": "Source-reviewed general preparedness content. Visual QA passed; Buffer authentication and Facebook/Instagram/YouTube channel discovery passed; hosted 1080x1920 video is ready for controlled publication.",
-      "copy": "Could your family find the important information they need during an emergency? A simple family emergency information sheet can keep key contacts, medications and allergies, school or child-care information, and meeting places organized. Prepare it, store it securely, and review it every 6 months. Planning resource: https://www.ready.gov/plan\\n\\nThe Prepared Parent Project — Preparing Alabama parents. Strengthening Alabama families.\\n\\n#PreparedParent #FamilyPreparedness #AlabamaFamilies",
+      "publishGate": "PUBLISHING",
+      "reason": "Buffer accepted the approved posts. Live-link verification is in progress; this PUBLISHING lock prevents duplicate retries.",
+      "copy": "Could your family find the important information they need during an emergency? A simple family emergency information sheet can keep key contacts, medications and allergies, school or child-care information, and meeting places organized. Prepare it, store it securely, and review it every 6 months. Planning resource: https://www.ready.gov/plan\\n\\nThe Prepared Parent Project \u2014 Preparing Alabama parents. Strengthening Alabama families.\\n\\n#PreparedParent #FamilyPreparedness #AlabamaFamilies",
       "assetKind": "video",
       "assetUrl": "https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4",
       "youtubeTitle": "Family Emergency Information Sheet #Shorts",
@@ -52,7 +52,32 @@
         "squareDesignId": "DAHYu_VwhAA",
         "verticalDesignId": "DAHYuySOFT4",
         "platformAdaptationsFolderId": "FAHYuyDPQIs"
-      }
+      },
+      "publicationStatus": "PUBLISHING",
+      "publishedAt": "2026-10-22T11:41:01.202685+00:00",
+      "bufferPosts": [
+        {
+          "service": "facebook",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ad9f63bbcda36d1d418d6b4",
+          "status": "sent",
+          "externalLink": "https://facebook.com/1627537305441233"
+        },
+        {
+          "service": "youtube",
+          "channel": "The Prepared Parent Project",
+          "postId": "6ad9f640bcda36d1d418d7f7",
+          "status": "sent",
+          "externalLink": "https://www.youtube.com/watch?v=w055zB8qVj8"
+        },
+        {
+          "service": "instagram",
+          "channel": "thepreparedparentproject",
+          "postId": "6ad9f643e0831046db0e3a04",
+          "status": "sending",
+          "externalLink": null
+        }
+      ]
     },
     {
       "id": "PP-016",
