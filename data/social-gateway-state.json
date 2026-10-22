@@ -1,0 +1,5 @@
+{
+  "buffer": {"ok": false, "reason": "not tested in this run"},
+  "meta": {"ok": false, "reason": "OAuth/account authorization pending"},
+  "youtube": {"ok": false, "reason": "OAuth/account authorization pending"}
+}
