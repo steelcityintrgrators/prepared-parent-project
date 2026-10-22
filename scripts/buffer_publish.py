@@ -60,6 +60,10 @@ def main():
     ap.add_argument("--publish",action="store_true")
     ap.add_argument("--test-social",action="store_true")
     ap.add_argument("--verify-posts",nargs="*")
+    ap.add_argument("--publish-asset")
+    ap.add_argument("--asset-kind",choices=["image","video"])
+    ap.add_argument("--text")
+    ap.add_argument("--targets",default="facebook,instagram")
     args=ap.parse_args()
     queue=load(QUEUE); ready=[]; blocked=[]
     for r in queue.get("records",[]):
@@ -103,6 +107,29 @@ def main():
             try: results.append(graphql(key,q,{"id":pid}).get("post"))
             except Exception as e: results.append({"id":pid,"lookupError":str(e)})
         print("POST_VERIFICATION",json.dumps(results,indent=2)); return 0
+    if args.publish_asset:
+        if not args.asset_kind or not args.text: raise SystemExit("--asset-kind and --text required")
+        account=graphql(key,ACCOUNT_QUERY).get("account") or {}; channels=[]
+        for org in account.get("organizations") or []:
+            channels += graphql(key,CHANNELS_QUERY,{"input":{"organizationId":org["id"]}}).get("channels") or []
+        wanted=set(x.strip() for x in args.targets.split(",") if x.strip()); results=[]
+        for ch in [x for x in channels if x.get("service") in wanted]:
+            svc=ch["service"]; cid=ch["id"]
+            if args.asset_kind=="image" and svc=="youtube": continue
+            if svc=="facebook": meta="{facebook: {type: "+("reel" if args.asset_kind=="video" else "post")+"}}"
+            elif svc=="instagram": meta="{instagram: {type: "+("reel" if args.asset_kind=="video" else "post")+", shouldShareToFeed: true}}"
+            else: meta='{youtube: {title: "Prepared Parent #Shorts", categoryId: "26", privacy: public, madeForKids: false, notifySubscribers: true}}'
+            assetfield="video" if args.asset_kind=="video" else "image"
+            mutation=f"""mutation CreatePost($text: String!, $asset: String!) {{
+              createPost(input: {{text:$text, channelId:"{cid}", schedulingType:automatic, mode:shareNow,
+                assets:[{{{assetfield}:{{url:$asset}}}}], metadata:{meta}}}) {{
+                ... on PostActionSuccess {{ post {{ id status externalLink }} }}
+                ... on MutationError {{ message }}
+              }}
+            }}"""
+            out=graphql(key,mutation,{"text":args.text,"asset":args.publish_asset}).get("createPost") or {}
+            results.append({"service":svc,"result":out})
+        print("ASSET_PUBLISH_RESULTS",json.dumps(results,indent=2)); return 0
     if args.test_social:
         account=graphql(key,ACCOUNT_QUERY).get("account") or {}
         orgs=account.get("organizations") or []
