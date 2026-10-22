@@ -1,5 +1,32 @@
 {
-  "buffer": {"ok": false, "reason": "not tested in this run"},
-  "meta": {"ok": false, "reason": "OAuth/account authorization pending"},
-  "youtube": {"ok": false, "reason": "OAuth/account authorization pending"}
+  "version": "2.0.0",
+  "updated": "2026-10-22T11:41:51Z",
+  "buffer": {
+    "ok": true,
+    "publishingVerified": true,
+    "route": "Buffer GraphQL",
+    "liveChannels": [
+      "facebook",
+      "instagram",
+      "youtube"
+    ],
+    "proofRunId": 39772368613,
+    "contentId": "PP-008"
+  },
+  "directProviders": {
+    "meta": {
+      "ok": false,
+      "required": false,
+      "reason": "Direct Meta OAuth is not configured; Facebook and Instagram publication is currently verified through Buffer."
+    },
+    "youtube": {
+      "ok": false,
+      "required": false,
+      "reason": "Direct YouTube OAuth is not configured; YouTube publication is currently verified through Buffer."
+    }
+  },
+  "profileManagement": {
+    "available": false,
+    "reason": "The current connected toolset can publish content but exposes no Facebook, Instagram, or YouTube profile-image/banner management action."
+  }
 }
