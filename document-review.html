@@ -24,9 +24,10 @@
     <div class="section-head">
       <p class="eyebrow">Document Review Beta</p>
       <h1 style="font-size:clamp(40px,6vw,68px);color:var(--ink)">Understand what you received. Prepare what to verify next.</h1>
-      <p>Select court papers, service documents, DHR notices, orders, motions, or related records. The current privacy-first beta processes file names and plain-text content locally in your browser and never uploads your files to a server.</p>
+      <p>Select court papers, service documents, DHR notices, orders, motions, or related records. The page clearly shows whether it is operating in local-only beta mode or through the configured zero-retention secure review service.</p>
     </div>
     <div class="notice"><strong>Important legal limit:</strong> this tool does not tell you what you are legally required to file, calculate deadlines, or replace a lawyer. It identifies document signals, possible filing categories to research, questions to verify with the court or a licensed attorney, and items you may want to organize for court.</div>
+    <div id="backendStatus" class="status">Checking document-review mode…</div>
 
     <div class="doc-review-grid">
       <section class="panel doc-intake">
@@ -46,7 +47,7 @@
         <label>Select files
           <input id="docFiles" type="file" multiple accept=".pdf,.doc,.docx,.txt,.rtf,.png,.jpg,.jpeg,.webp,application/pdf,text/plain,image/*">
         </label>
-        <p class="doc-privacy"><strong>Privacy:</strong> files selected here stay in this browser. Plain-text files can be read locally. PDF, DOC/DOCX, and image contents are not transmitted or silently uploaded.</p>
+        <p id="docPrivacy" class="doc-privacy"><strong>Privacy:</strong> Current mode is loading. No file is transmitted until you explicitly choose <em>Review my documents</em>.</p>
         <label>Paste important text from the notice or court paper
           <textarea id="docText" rows="10" placeholder="Paste the caption, hearing notice, deadline language, relief requested, case number, or other visible text you want the beta to review. Remove SSNs, bank numbers, children's medical details, or other sensitive data you do not need analyzed."></textarea>
         </label>
@@ -79,86 +80,7 @@
 </section>
 </main>
 <footer><div class="shell footer-grid"><div><h3>The Prepared Parent Project</h3><p>Preparing Alabama parents. Strengthening Alabama families.</p></div><p class="footer-disclaimer">The Prepared Parent Project is not a law firm and does not provide legal advice or legal representation. Document Review is an educational preparation tool only.</p></div></footer>
-<script>
-(function(){
-"use strict";
-const files=document.getElementById("docFiles");
-const text=document.getElementById("docText");
-const goal=document.getElementById("docGoal");
-const context=document.getElementById("docContext");
-const out=document.getElementById("docResults");
-const btn=document.getElementById("analyzeDocs");
-const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-const uniq=a=>[...new Set(a.filter(Boolean))];
-
-async function localTextFromFiles(){
-  const chunks=[];
-  for(const f of files.files){
-    if(f.type.startsWith("text/") || /\.(txt|rtf)$/i.test(f.name)){
-      try{chunks.push(await f.text());}catch(_){}
-    }
-  }
-  return chunks.join("\n");
-}
-function detectDates(s){
-  const matches=s.match(/\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2},?\s+\d{4}\b|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/gi)||[];
-  return uniq(matches).slice(0,12);
-}
-function contains(s,terms){return terms.some(t=>s.includes(t));}
-function analyze(raw){
-  const s=raw.toLowerCase();
-  const signals=[];
-  const possible=[];
-  const bring=["Government-issued photo ID","A complete copy of every document you received or filed","A simple dated timeline of important events","Paper and pen / notes with questions you want answered"];
-  const verify=["Exact court, case number, and names shown on the caption","Whether an existing order already controls the issue","Any hearing date, response date, or other deadline shown on the document","Whether local court rules or required forms apply"];
-  const escalate=[];
-
-  if(contains(s,["summons","complaint","petition","served","service of process"])){signals.push("Initial service / pleading language detected"); possible.push("Response / answer category — verify whether a response is required, the exact deadline, and the correct form before filing.");}
-  if(contains(s,["motion to modify","modification","modify"])){signals.push("Modification language detected"); possible.push("Modification-related filing category — verify the legal standard, required forms, service rules, and supporting evidence.");}
-  if(contains(s,["show cause","contempt","rule nisi"])){signals.push("Show-cause / contempt language detected"); possible.push("Response to enforcement/contempt allegations — attorney review is strongly recommended before deciding what to file."); escalate.push("Contempt/show-cause matters can carry serious consequences; consider prompt licensed-attorney review.");}
-  if(contains(s,["hearing","trial","court date","appear before"])){signals.push("Hearing or appearance language detected"); bring.push("The hearing notice and current controlling orders","Organized exhibits you may want to discuss, with copies if allowed","A one-page issue list focused on what the hearing appears to address");}
-  if(contains(s,["child support","support order","income","cs-41","cs-42","rule 32"])){signals.push("Child-support language detected"); bring.push("Recent pay stubs or income records","Tax returns / 1099s / business records if self-employed","Child-care cost records","Health-insurance premium documentation for the child","Proof of payments or credits you believe are relevant"); possible.push("Child-support guideline or financial disclosure forms may be relevant — verify the current Alabama Judicial System forms and what your court requires.");}
-  if(contains(s,["custody","visitation","parenting time","joint custody","physical custody"])){signals.push("Custody / parenting-time language detected"); bring.push("Current custody/parenting order, if any","A factual parenting-time calendar","School/day-care schedules and relevant logistics","A concise proposed schedule if schedule terms are actually at issue"); possible.push("Custody/parenting-time pleading category may be relevant — verify whether this is an initial determination, modification, or enforcement matter before choosing a filing.");}
-  if(contains(s,["dhr","department of human resources","child support enforcement division"])){signals.push("Alabama DHR / agency language detected"); bring.push("All DHR notices and correspondence","Any administrative case or reference number","Payment history or income records relevant to the notice"); verify.push("Whether the matter is administrative, court-based, or both.");}
-  if(contains(s,["default","default judgment"])){signals.push("Default language detected"); escalate.push("Default language can be time-sensitive. Prompt attorney or court-clerk verification is appropriate.");}
-  if(contains(s,["protection from abuse","pfa","restraining order","domestic violence"])){signals.push("Protective-order / safety language detected"); escalate.push("Safety/protective-order matters require prompt, situation-specific legal and safety support.");}
-  if(contains(s,["appeal","notice of appeal"])){signals.push("Appeal language detected"); escalate.push("Appeal deadlines can be short and highly procedural. Prompt attorney review is strongly recommended.");}
-
-  if(context.value==="support") bring.push("Child-support worksheet/forms and financial records relevant to the issue");
-  if(context.value==="custody") bring.push("Parenting-time records and existing custody orders");
-  if(context.value==="served") verify.push("Date and method of service shown on the documents or return of service");
-  if(context.value==="hearing") bring.push("Any order setting the hearing and documents referenced in that order");
-
-  return {signals:uniq(signals),possible:uniq(possible),bring:uniq(bring),verify:uniq(verify),escalate:uniq(escalate),dates:detectDates(raw)};
-}
-btn.addEventListener("click",async()=>{
-  const selected=[...files.files];
-  const localText=await localTextFromFiles();
-  const names=selected.map(f=>f.name).join(" ");
-  const raw=[names,localText,text.value,goal.value].join("\n").trim();
-  if(!raw){
-    out.innerHTML='<h2>2. Your preparation report</h2><div class="notice danger"><strong>No information to review.</strong> Select at least one file or paste key text from the document.</div>';
-    return;
-  }
-  const a=analyze(raw);
-  const binary=selected.filter(f=>!f.type.startsWith("text/")&&!/\.(txt|rtf)$/i.test(f.name));
-  const list=x=>x.length?'<ul>'+x.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul>':'<p>No reliable signal detected from the information available.</p>';
-  out.innerHTML=
-    '<h2>2. Your preparation report</h2>'+
-    '<p><strong>Files selected:</strong> '+(selected.length?selected.map(f=>esc(f.name)).join(', '):'None')+'</p>'+
-    (binary.length?'<div class="notice"><strong>Current beta limitation:</strong> '+binary.length+' PDF/DOCX/image file'+(binary.length===1?' was':'s were')+' selected, but this static site does not yet read their internal text. Results below use file names, pasted text, and locally readable text files only.</div>':'')+
-    '<h3>Document signals</h3>'+list(a.signals)+
-    '<h3>Dates found — verify against the original document</h3>'+list(a.dates)+
-    '<h3>Possible filing categories to research / verify</h3>'+list(a.possible)+
-    '<div class="notice"><strong>Do not file based only on this list.</strong> Confirm the required form, deadline, service requirements, and legal standard with current Alabama authority, the court where appropriate, or a licensed attorney.</div>'+
-    '<h3>Items to consider organizing for court</h3>'+list(a.bring)+
-    '<h3>Questions to verify next</h3>'+list(a.verify)+
-    (a.escalate.length?'<h3>Attorney-review / urgency flags</h3>'+list(a.escalate):'')+
-    '<div class="result-tools"><button class="btn small" id="copyDocReport" type="button">Copy report</button><button class="btn secondary small" id="printDocReport" type="button">Print / Save PDF</button></div>';
-  document.getElementById("copyDocReport").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(out.innerText);}catch(_){}});
-  document.getElementById("printDocReport").addEventListener("click",()=>window.print());
-});
-})();
-</script>
+<script src="assets/runtime-config.js"></script>
+<script src="assets/document-review.js"></script>
 </body>
 </html>
