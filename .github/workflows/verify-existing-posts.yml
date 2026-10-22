@@ -1,0 +1,138 @@
+name: Verify Existing Prepared Parent Posts
+
+on:
+  push:
+    paths:
+      - 'verification-trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prepared-parent-social-verifier
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve content and post IDs
+        run: |
+          CONTENT_ID="$(head -n 1 verification-trigger.txt | tr -d '\r\n\t ')"
+          test -n "$CONTENT_ID"
+          echo "CONTENT_ID=$CONTENT_ID" >> "$GITHUB_ENV"
+          python - <<'PY' > /tmp/post_ids
+          import json, os
+          q=json.load(open("data/publishing-queue.json"))
+          r=next((x for x in q["records"] if x.get("id")==os.environ["CONTENT_ID"]),None)
+          assert r, "content record not found"
+          ids=[x.get("postId") for x in r.get("bufferPosts",[]) if x.get("postId")]
+          assert ids, "no existing Buffer post IDs"
+          print(" ".join(ids))
+          PY
+          echo "POST_IDS=$(cat /tmp/post_ids)" >> "$GITHUB_ENV"
+
+      - name: Verify existing live posts without republishing
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          mkdir -p proof
+          verified=0
+          for attempt in $(seq 1 20); do
+            python scripts/buffer_publish.py --verify-posts $POST_IDS --output proof/verify-results.json
+            if python - <<'PY'
+          import json, sys
+          posts=json.load(open("proof/verify-results.json"))
+          ok=bool(posts) and all(
+              p and p.get("externalLink")
+              and not p.get("lookupError")
+              and not ((p.get("error") or {}).get("message"))
+              and p.get("status")=="sent"
+              for p in posts
+          )
+          sys.exit(0 if ok else 1)
+          PY
+            then
+              verified=1
+              break
+            fi
+            sleep 15
+          done
+          test "$verified" = "1"
+
+      - name: Record verified live publication
+        run: |
+          python - <<'PY'
+          import json, os, datetime as dt
+          from pathlib import Path
+          content_id=os.environ["CONTENT_ID"]
+          verified=json.load(open("proof/verify-results.json"))
+          by_id={x.get("id"):x for x in verified if x and x.get("id")}
+
+          qpath=Path("data/publishing-queue.json")
+          q=json.loads(qpath.read_text())
+          rec=next(x for x in q["records"] if x.get("id")==content_id)
+
+          live=[]
+          for item in rec.get("bufferPosts",[]):
+              v=by_id.get(item.get("postId"),{})
+              live.append({
+                  "service":item.get("service"),
+                  "channel":item.get("channel"),
+                  "postId":item.get("postId"),
+                  "status":v.get("status") or item.get("status"),
+                  "url":v.get("externalLink") or item.get("externalLink")
+              })
+          assert live and all(x.get("url") and x.get("status")=="sent" for x in live), live
+
+          published_at=rec.get("publishedAt") or dt.datetime.now(dt.timezone.utc).isoformat()
+          rec["publishGate"]="VERIFIED_LIVE"
+          rec["publicationStatus"]="VERIFIED_LIVE"
+          rec["publishedAt"]=published_at
+          rec["livePosts"]=live
+          rec["reason"]="Published through the queue-gated Buffer workflow and verified live by verification-only post lookup."
+
+          logpath=Path("data/publication-log.json")
+          log=json.loads(logpath.read_text()) if logpath.exists() else {"version":"1.0.0","publications":[]}
+          existing=next((x for x in log.get("publications",[]) if x.get("contentId")==content_id),None)
+          entry={
+              "contentId":content_id,
+              "publishedAt":published_at,
+              "sourceUrl":rec.get("sourceUrl"),
+              "assetUrl":rec.get("assetUrl"),
+              "posts":live,
+              "verification":"VERIFIED_LIVE"
+          }
+          if existing:
+              existing.clear(); existing.update(entry)
+          else:
+              log.setdefault("publications",[]).append(entry)
+
+          qpath.write_text(json.dumps(q,indent=2)+"\n")
+          logpath.write_text(json.dumps(log,indent=2)+"\n")
+          PY
+          git config user.name "prepared-parent-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/publishing-queue.json data/publication-log.json
+          git commit -m "Verify existing live posts for $CONTENT_ID"
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 3))
+          done
+          exit 1
+
+      - name: Upload verification proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prepared-parent-existing-post-verification
+          path: proof/
+          if-no-files-found: warn
+          retention-days: 90
