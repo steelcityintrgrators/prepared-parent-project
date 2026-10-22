@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "updated": "2026-10-22",
   "identity": {
     "name": "The Prepared Parent Project",
@@ -63,7 +63,7 @@
   "visualSystem": {
     "cornerRadius": "12–18px on cards and calls to action",
     "shadows": "soft, restrained, low-elevation",
-    "photography": "realistic, diverse Alabama families and community contexts; avoid staged legal imagery",
+    "photography": "realistic Black and diverse Alabama families and community contexts; avoid staged legal imagery",
     "illustration": "simple editorial shapes and icons; no clip-art look",
     "contentSafeZones": "keep essential text clear of Reel/Short app chrome and platform crop zones"
   },
@@ -76,6 +76,18 @@
     "brandGovernanceFolderId": "FAHYtWSlUPQ",
     "platformAdaptationsFolderId": "FAHYuyDPQIs",
     "visualReferenceDesignId": "DAHYqbVmSaI",
-    "canonicalLogoStatus": "AWAITING_CANVA_WIDGET_CONFIRMATION"
+    "canonicalLogoStatus": "APPROVED_FALLBACK_IDENTITY"
+  },
+  "approvedAssets": {
+    "status": "FINAL",
+    "approvedOn": "2026-10-22",
+    "direction": "Black family imagery, Alabama visual context, navy/green/gold identity, family-path emblem",
+    "youtubeBannerStatus": "APPROVED",
+    "facebookCoverStatus": "FINAL_READY_FOR_UPLOAD",
+    "instagramProfileStatus": "FINAL_READY_FOR_UPLOAD",
+    "instagramBrandAssetsStatus": "FINAL_READY_FOR_UPLOAD",
+    "websiteSocialPreviewStatus": "FINAL_READY_FOR_UPLOAD",
+    "packageDriveUrl": "https://drive.google.com/file/d/13h3VsVZuF9ZtfOBJS3rbyIrAfAteC_mj/view?usp=drivesdk",
+    "websiteSocialPreviewDriveUrl": "https://drive.google.com/file/d/1bywdu_GOmp8adYeQFvp3qiBKEqSSM2PU/view?usp=drivesdk"
   }
 }
