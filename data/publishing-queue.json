@@ -29,14 +29,30 @@
       "sourceUrl": "https://www.ready.gov/kids/family-emergency-planning",
       "targets": [
         "facebook",
-        "instagram"
+        "instagram",
+        "youtube"
       ],
-      "assetStatus": "CANVA_GENERATION_IN_PROGRESS",
+      "assetStatus": "READY",
       "copyStatus": "READY",
-      "publishGate": "BLOCKED",
-      "reason": "Copy finalized. Canva asset generation in progress; Buffer authentication/channel discovery must pass before controlled publication.",
+      "publishGate": "READY",
+      "reason": "Source-reviewed general preparedness content. Visual QA passed; Buffer authentication and Facebook/Instagram/YouTube channel discovery passed; hosted 1080x1920 video is ready for controlled publication.",
       "copy": "Could your family find the important information they need during an emergency? A simple family emergency information sheet can keep key contacts, medications and allergies, school or child-care information, and meeting places organized. Prepare it, store it securely, and review it every 6 months. Planning resource: https://www.ready.gov/plan\\n\\nThe Prepared Parent Project — Preparing Alabama parents. Strengthening Alabama families.\\n\\n#PreparedParent #FamilyPreparedness #AlabamaFamilies",
-      "canvaJobId": "7996f680-548b-4b6e-b8b3-d3d57add9cd2"
+      "assetKind": "video",
+      "assetUrl": "https://steelcityintrgrators.github.io/prepared-parent-project/media/PP-008-SHORT.mp4",
+      "youtubeTitle": "Family Emergency Information Sheet #Shorts",
+      "visualQA": {
+        "status": "PASSED",
+        "dimensions": "1080x1920",
+        "durationSeconds": 30,
+        "checked": "2026-10-22",
+        "notes": "Rendered frames are clean, mobile-readable, consistently branded, and include source/disclaimer language."
+      },
+      "canva": {
+        "masterDesignId": "DAHYsBZz3os",
+        "squareDesignId": "DAHYu_VwhAA",
+        "verticalDesignId": "DAHYuySOFT4",
+        "platformAdaptationsFolderId": "FAHYuyDPQIs"
+      }
     },
     {
       "id": "PP-016",
