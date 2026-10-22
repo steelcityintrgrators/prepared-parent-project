@@ -109,7 +109,7 @@ jobs:
           PY
           IDS="$(cat /tmp/post_ids)"
           verified=0
-          for attempt in 1 2 3 4 5 6 7 8; do
+          for attempt in $(seq 1 20); do
             python scripts/buffer_publish.py --verify-posts $IDS --output proof/verify-results.json
             if python - <<'PY'
           import json, sys
