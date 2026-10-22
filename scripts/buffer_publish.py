@@ -109,8 +109,9 @@ def main():
         results=[]
         for ch in targets:
             cid=ch["id"]
+            meta = "{facebook: {type: post}}" if ch.get("service")=="facebook" else "{instagram: {type: post, shouldShareToFeed: true}}"
             mutation=f'''mutation CreatePost($text: String!) {{
-              createPost(input: {{text: $text, channelId: "{cid}", schedulingType: automatic, mode: shareNow}}) {{
+              createPost(input: {{text: $text, channelId: "{cid}", schedulingType: automatic, mode: shareNow, metadata: {meta}}}) {{
                 ... on PostActionSuccess {{ post {{ id status externalLink }} }}
                 ... on MutationError {{ message }}
               }}
