@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-10-22",
+  "defaultMode": "ORIGINAL_SYNTHETIC",
+  "allowedModes": {
+    "ORIGINAL_SYNTHETIC": {
+      "publishable": true,
+      "externalLicenseRequired": false,
+      "description": "Audio generated inside the Prepared Parent rendering pipeline. No third-party music is used."
+    },
+    "VERIFIED_ROYALTY_FREE": {
+      "publishable": true,
+      "externalLicenseRequired": true,
+      "requiredFields": [
+        "file",
+        "sourceUrl",
+        "licenseName",
+        "verifiedOn"
+      ],
+      "description": "Third-party royalty-free audio may be used only after its license and source are recorded and the file exists in the repository."
+    },
+    "NONE": {
+      "publishable": true,
+      "externalLicenseRequired": false,
+      "description": "Silent output is allowed only when explicitly selected."
+    }
+  },
+  "prohibited": [
+    "unverified downloaded music",
+    "copyrighted commercial recordings without a recorded license",
+    "audio with unknown provenance"
+  ],
+  "qc": {
+    "requireAudioStreamWhenModeNotNone": true,
+    "defaultTargetVolumeDb": -22,
+    "fadeSeconds": 1.25
+  }
+}
