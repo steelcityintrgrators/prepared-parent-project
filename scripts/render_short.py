@@ -7,8 +7,8 @@ BG="#12263A"; ACCENT="#F4B942"; WHITE="#FFFFFF"
 FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 # Reel/Short safe canvas: keep essential text away from app chrome.
 LEFT,RIGHT,TOP,BOTTOM=110,970,260,1450
-MAX_CHARS=27
-MAX_LINES=6
+MAX_CHARS=22
+MAX_LINES=5
 
 def wrap_text(s, width=MAX_CHARS):
     lines=[]
@@ -35,7 +35,7 @@ def main():
         wrapped=wrap_text(s["text"])
         txtfile=f"/tmp/scene_{i}.txt"; Path(txtfile).write_text(wrapped,encoding="utf-8")
         # Fixed safe width + wrapping prevents horizontal clipping. Center block in safe region.
-        filters.append(f"drawtext=fontfile={FONT}:textfile={txtfile}:fontcolor={WHITE}:fontsize=58:line_spacing=24:x=max({LEFT},(w-text_w)/2):y=max({TOP},min((h-text_h)/2,{BOTTOM}-text_h)):enable='between(t,{start},{end})'")
+        filters.append(f"drawtext=fontfile={FONT}:textfile={txtfile}:fontcolor={WHITE}:fontsize=54:line_spacing=24:x=max({LEFT},(w-text_w)/2):y=max({TOP},min((h-text_h)/2,{BOTTOM}-text_h)):enable='between(t,{start},{end})'")
         filters.append(f"drawtext=fontfile={FONT}:text='{i+1}/{len(b['scenes'])}':fontcolor={ACCENT}:fontsize=30:x=(w-text_w)/2:y=1510:enable='between(t,{start},{end})'")
     # End-card-only source/disclaimer; never place persistent text under Instagram UI.
     end_start=max(0,t-4)
