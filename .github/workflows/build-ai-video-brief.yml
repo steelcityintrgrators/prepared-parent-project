@@ -1,0 +1,22 @@
+name: Build AI Video Production Brief
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'video/briefs/**'
+      - 'scripts/build_video_brief.py'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build guarded production brief
+        run: python scripts/build_video_brief.py
+      - name: Validate production brief
+        run: python -m json.tool video/openedit/PP-008.production.json >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prepared-parent-ai-video-brief
+          path: video/openedit/PP-008.production.json
