@@ -35,7 +35,7 @@ def main():
         wrapped=wrap_text(s["text"])
         txtfile=f"/tmp/scene_{i}.txt"; Path(txtfile).write_text(wrapped,encoding="utf-8")
         # Fixed safe width + wrapping prevents horizontal clipping. Center block in safe region.
-        filters.append(f"drawtext=fontfile={FONT}:textfile={txtfile}:fontcolor={WHITE}:fontsize=54:line_spacing=24:x=max({LEFT},(w-text_w)/2):y=max({TOP},min((h-text_h)/2,{BOTTOM}-text_h)):enable='between(t,{start},{end})'")
+        filters.append(f"drawtext=fontfile={FONT}:textfile={txtfile}:fontcolor={WHITE}:fontsize=54:line_spacing=24:x=(w-text_w)/2:y=(h-text_h)/2:enable='between(t,{start},{end})'")
         filters.append(f"drawtext=fontfile={FONT}:text='{i+1}/{len(b['scenes'])}':fontcolor={ACCENT}:fontsize=30:x=(w-text_w)/2:y=1510:enable='between(t,{start},{end})'")
     # End-card-only source/disclaimer; never place persistent text under Instagram UI.
     end_start=max(0,t-4)
