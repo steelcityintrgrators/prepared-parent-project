@@ -117,7 +117,7 @@ def main():
                 meta='{youtube: {title: "Family Emergency Information Sheet #Shorts", categoryId: "26", privacy: public, madeForKids: false, notifySubscribers: true}}'
             mutation=f'''mutation CreatePost($text: String!, $video: String!) {{
               createPost(input: {{text: $text, channelId: "{cid}", schedulingType: automatic, mode: shareNow,
-                assets: {{videos: [{{url: $video}}]}}, metadata: {meta}}}) {{
+                assets: [{{video: {{url: $video}}}}], metadata: {meta}}}) {{
                 ... on PostActionSuccess {{ post {{ id status externalLink }} }}
                 ... on MutationError {{ message }}
               }}
