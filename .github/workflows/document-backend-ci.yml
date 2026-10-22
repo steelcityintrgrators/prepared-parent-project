@@ -1,0 +1,52 @@
+name: Test Prepared Parent Document Review Backend
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - 'assets/document-review.js'
+      - 'assets/runtime-config.js'
+      - 'document-review.html'
+      - '.github/workflows/document-backend-ci.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'assets/document-review.js'
+      - 'assets/runtime-config.js'
+      - 'document-review.html'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: backend/package.json
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run zero-retention safety tests
+        run: npm test
+      - name: Build production container
+        run: docker build -t prepared-parent-document-review:test .
+
+  frontend-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify secure/local mode contract
+        run: |
+          grep -q 'documentReviewApi' assets/runtime-config.js
+          grep -q 'secureDocumentReview' assets/runtime-config.js
+          grep -q 'X-Review-Token' assets/document-review.js
+          grep -q 'LEGAL REVIEW REQUIRED' assets/document-review.js
+          grep -q 'No file is transmitted until' document-review.html
+          ! grep -RniE 'OPENAI_API_KEY|REVIEW_TOKEN_SECRET|CLOUDFLARE_API_TOKEN' assets document-review.html
