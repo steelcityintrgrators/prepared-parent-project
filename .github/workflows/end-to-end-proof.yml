@@ -2,6 +2,9 @@ name: Prepared Parent End-to-End Proof
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/end-to-end-proof.yml'
 
 permissions:
   contents: read
