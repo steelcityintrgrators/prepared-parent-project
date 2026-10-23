@@ -1,0 +1,51 @@
+name: Verify Live Document Review Backend
+
+on:
+  push:
+    paths:
+      - 'assets/runtime-config.js'
+      - '.github/workflows/verify-live-document-backend.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read configured backend URL
+        id: config
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import re
+          s=open("assets/runtime-config.js").read()
+          m=re.search(r'documentReviewApi:\s*"([^"]+)"',s)
+          assert m and m.group(1).startswith("https://")
+          print("url="+m.group(1).rstrip("/"))
+          PY
+      - name: Verify production health contract
+        run: |
+          URL="${{ steps.config.outputs.url }}"
+          # Free Render services can cold-start, so allow up to 90 seconds.
+          curl --fail --silent --show-error --retry 3 --retry-delay 5 --max-time 90 "$URL/api/health" > /tmp/health.json
+          cat /tmp/health.json
+          python - <<'PY'
+          import json
+          h=json.load(open("/tmp/health.json"))
+          assert h.get("ok") is True, h
+          assert h.get("zeroRetention") is True, h
+          assert h.get("legalAuthorityGate")=="ENFORCED", h
+          PY
+      - name: Verify CORS/token endpoint from production site origin
+        run: |
+          URL="${{ steps.config.outputs.url }}"
+          curl --fail --silent --show-error --max-time 90             -H 'Origin: https://steelcityintrgrators.github.io'             -D /tmp/headers.txt "$URL/api/token" > /tmp/token.json
+          grep -qi 'access-control-allow-origin: https://steelcityintrgrators.github.io' /tmp/headers.txt
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/token.json"))
+          assert isinstance(d.get("token"),str) and len(d["token"])>20
+          print("Token endpoint and production CORS verified; token value intentionally not printed.")
+          PY
